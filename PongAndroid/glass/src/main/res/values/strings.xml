@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Pong</string>
+    <string name="title_activity_activity_main">Pong</string>
+    <string name="touch_to_play">Touch to play</string>
+    <string name="play">Play</string>
+    <string name="exit">Exit</string>
+</resources>
