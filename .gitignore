@@ -89,7 +89,9 @@ crashlytics-build.properties
 .mtj.tmp/
 
 # Package Files #
-*.jar
+#*.jar
+#!PongAndroid/gradle/wrapper/*
+
 *.war
 *.ear
 
