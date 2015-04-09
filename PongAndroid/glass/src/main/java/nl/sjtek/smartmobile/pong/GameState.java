@@ -12,7 +12,7 @@ public class GameState {
     final int screenHeight = 360;
 
     //The ball
-    final int _ballSize = 10;
+    final int ballSize = 10;
     int ballX = 100;
     int ballY = 100;
     int ballVelocityX = 3;
@@ -39,8 +39,10 @@ public class GameState {
         ballX += ballVelocityX;
         ballY += ballVelocityY;
 
+        topBatX = ballX - batLength/2;
+
         //DEATH!
-        if (ballY > screenHeight || ballY < 0) {
+        if (ballY > screenHeight - (ballSize/2) || ballY < ballSize/2) {
             ballX = 100;
             ballY = 100;
         }    //Collisions with the sides
@@ -57,30 +59,8 @@ public class GameState {
     }
 
     public void changeBatSpeed(float batSpeed) {
-
-        // Speed limit
-
-        if (batSpeed > 0) {
-            if (!(bottomBatX > (screenWidth - batLength))) {
-                bottomBatX += batSpeed;
-            }
-
-            if (!(topBatX > (screenWidth - batLength))) {
-                topBatX += batSpeed;
-            }
-
-        } else if (batSpeed < 0) {
-            if (!(bottomBatX < 0)) {
-                bottomBatX += batSpeed;
-            }
-
-            if (!(topBatX < 0)) {
-                topBatX += batSpeed;
-            }
-        }
+        bottomBatX = (int) batSpeed;
     }
-
-
 
 
     public void draw(Canvas canvas, Paint paint) {
@@ -92,7 +72,7 @@ public class GameState {
         paint.setARGB(200, 255, 255, 255);
 
         //draw the ball
-        canvas.drawRect(new Rect(ballX, ballY, ballX + _ballSize, ballY + _ballSize),
+        canvas.drawRect(new Rect(ballX, ballY, ballX + ballSize, ballY + ballSize),
                 paint);
 
         //draw the bats

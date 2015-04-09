@@ -21,7 +21,8 @@ public class ActivityGame extends Activity implements SensorEventListener {
     private GameView gameView;
     private SensorManager sensorManager;
     private Sensor sensor;
-    private TextView textViewZ;
+//    private TextView textViewRaw, textViewMapped;
+    private float valueSmooth = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +30,8 @@ public class ActivityGame extends Activity implements SensorEventListener {
         Log.d(this.getClass().getCanonicalName(), "game start");
         setContentView(R.layout.activity_game);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        textViewZ = (TextView) findViewById(R.id.textViewZ);
+//        textViewRaw = (TextView) findViewById(R.id.textViewRaw);
+//        textViewMapped = (TextView) findViewById(R.id.textViewMapped);
         gameView = (GameView) findViewById(R.id.gameView);
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -78,29 +80,32 @@ public class ActivityGame extends Activity implements SensorEventListener {
 
     public float power(final float base, final int power) {
         float result = 1;
-        for( int i = 0; i < power; i++ ) {
+        for (int i = 0; i < power; i++) {
             result *= base;
         }
         return result;
     }
 
+    private float map(float x, float in_min, float in_max, float out_min, float out_max) {
+        return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+    }
+
+    private float exponentialSmoothing(float input, float output, float alpha) {
+        return (output + alpha * (input - output));
+    }
+
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        float valueZ = sensorEvent.values[0];
 
-        float value = -valueZ;
-        value = value * 8;
-        if (value > 10) {
-            value = (float) 10;
-        } else if (value < -10) {
-            value = (float) -10;
-        }
-        gameView.changeBatSpeed(value);
-//        textViewZ.setText(String.valueOf(value));
+        float valueMapped = map(sensorEvent.values[0], -2f, 2f, 565f, 0f);
+        valueSmooth = exponentialSmoothing(valueMapped, valueSmooth, 0.1f);
+        gameView.changeBatSpeed(valueSmooth);
+
+//        textViewRaw.setText(String.valueOf(valueRaw));
+//        textViewMapped.setText(String.valueOf(valueSmooth));
     }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
-
     }
 }

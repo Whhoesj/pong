@@ -26,7 +26,7 @@ public class ActivitySensor extends Activity implements SensorEventListener {
 
         textX = (TextView) findViewById(R.id.textViewX);
         textY = (TextView) findViewById(R.id.textViewY);
-        textZ = (TextView) findViewById(R.id.textViewZ);
+        textZ = (TextView) findViewById(R.id.textViewRaw);
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
