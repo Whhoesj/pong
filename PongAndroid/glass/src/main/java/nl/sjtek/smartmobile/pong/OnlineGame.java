@@ -1,5 +1,7 @@
 package nl.sjtek.smartmobile.pong;
 
+import android.os.AsyncTask;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -21,17 +23,17 @@ public class OnlineGame {
     private GameUpdate gameUpdate = new GameUpdate(uuid);
     private float movementValue = 0;
 
-    private MovementThread movementThread;
-    private UpdateThread updateThread;
+    private MovementAsyncTask movementAsyncTask;
+    private UpdateAsyncTask updateAsyncTask;
 
     public OnlineGame() {
-        movementThread = new MovementThread();
-        updateThread = new UpdateThread();
+        movementAsyncTask = new MovementAsyncTask();
+        updateAsyncTask = new UpdateAsyncTask();
     }
 
     public void start() {
-        movementThread.run();
-        updateThread.run();
+        movementAsyncTask.execute();
+        updateAsyncTask.execute();
     }
 
     public GameUpdate getGameUpdate() {
@@ -42,10 +44,10 @@ public class OnlineGame {
         this.movementValue = movementValue;
     }
 
-    private class MovementThread implements Runnable {
+    private class MovementAsyncTask extends AsyncTask<Void, Void, Void> {
 
         @Override
-        public void run() {
+        protected Void doInBackground(Void... voids) {
             try {
                 Socket socket = new Socket(serverAddress, port);
                 ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
@@ -62,14 +64,14 @@ public class OnlineGame {
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-
+            return null;
         }
     }
 
-    private class UpdateThread implements Runnable {
+    private class UpdateAsyncTask extends AsyncTask<Void, Void, Void> {
 
         @Override
-        public void run() {
+        protected Void doInBackground(Void... voids) {
             try {
                 Socket socket = new Socket(serverAddress, port);
                 ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
@@ -81,7 +83,7 @@ public class OnlineGame {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
+            return null;
         }
     }
 }
