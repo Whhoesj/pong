@@ -9,7 +9,8 @@ import java.util.UUID;
 
 public class Client {
 
-    private UUID uuid;
+    public static final UUID EMPTY_UUID = UUID.fromString("00000000-0000-0000-0000-000000000000");
+    private UUID uuid = EMPTY_UUID;
     private Socket socketMovement;
     private Socket socketUpdate;
     private MovementThread movementThread;
@@ -21,11 +22,7 @@ public class Client {
 
     public void setUuid(UUID uuid) {
         this.uuid = uuid;
-    }
-
-    public void setUuid(String uuidString) {
-        UUID uuid = UUID.fromString(uuidString);
-        setUuid(uuid);
+        System.out.println("UUID set to: " + uuid.toString());
     }
 
     public void setSocketMovement(Socket socketMovement) {
@@ -61,5 +58,15 @@ public class Client {
         updateThread = new UpdateThread();
         updateThread.run();
         System.out.println("Client " + getUuid() + " ready.");
+    }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "uuid=" + uuid +
+                ", socketMovement=" + ((socketMovement == null) ? "null" : "not null") +
+                ", socketUpdate=" + ((socketUpdate == null) ? "null" : "not null") +
+                ", ready=" + ready +
+                '}';
     }
 }

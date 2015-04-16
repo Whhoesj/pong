@@ -29,6 +29,8 @@ public class PongServer {
         client2 = new Client();
         System.out.println("Waiting for incoming connections...");
         while (!client1.isReady() && !client2.isReady()) {
+            System.out.println(client1.toString());
+            System.out.println(client2.toString());
             Socket socket = serverSocket.accept();
             ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
             Object receivedObject = (Object)inputStream.readObject();
@@ -38,20 +40,20 @@ public class PongServer {
                 GameUpdate receivedGameUpdate = (GameUpdate) receivedObject;
                 UUID uuid = receivedGameUpdate.getUuid();
 
-                if (client1.getUuid() == null) {
+                if (client1.getUuid().compareTo(uuid) == 0) {
+                    client1.setSocketUpdate(socket);
+                    System.out.println("    Client: " + uuid + " - GameUpdate.");
+                } else if (client2.getUuid().compareTo(uuid) == 0) {
+                    client2.setSocketUpdate(socket);
+                    System.out.println("    Client: " + uuid + " - GameUpdate.");
+                } else if (client1.getUuid().compareTo(Client.EMPTY_UUID) == 0) {
                     client1.setUuid(uuid);
                     client1.setSocketUpdate(socket);
                     System.out.println("New client: " + uuid + " - GameUpdate.");
-                } else if (client2.getUuid() == null) {
+                } else if (client2.getUuid().compareTo(Client.EMPTY_UUID) == 0) {
                     client2.setUuid(uuid);
                     client2.setSocketUpdate(socket);
                     System.out.println("New client: " + uuid + " - GameUpdate.");
-                } else if (client1.getUuid() == uuid) {
-                    client1.setSocketUpdate(socket);
-                    System.out.println("    Client: " + uuid + " - GameUpdate.");
-                } else if (client2.getUuid() == uuid) {
-                    client2.setSocketUpdate(socket);
-                    System.out.println("    Client: " + uuid + " - GameUpdate.");
                 }
 
             } else if (receivedObject instanceof MovementUpdate) {
@@ -59,20 +61,20 @@ public class PongServer {
                 MovementUpdate movementUpdate = (MovementUpdate) receivedObject;
                 UUID uuid = movementUpdate.getUuid();
 
-                if (client1.getUuid() == null) {
+                if (client1.getUuid().compareTo(uuid) == 0) {
+                    client1.setSocketMovement(socket);
+                    System.out.println("    Client: " + uuid + " - MovementUpdate.");
+                } else if (client2.getUuid().compareTo(uuid) == 0) {
+                    client2.setSocketMovement(socket);
+                    System.out.println("    Client: " + uuid + " - MovementUpdate.");
+                } else if (client1.getUuid().compareTo(Client.EMPTY_UUID) == 0) {
                     client1.setUuid(uuid);
                     client1.setSocketMovement(socket);
                     System.out.println("New client: " + uuid + " - MovementUpdate.");
-                } else if (client2.getUuid() == null) {
+                } else if (client2.getUuid().compareTo(Client.EMPTY_UUID) == 0) {
                     client2.setUuid(uuid);
                     client2.setSocketMovement(socket);
                     System.out.println("New client: " + uuid + " - MovementUpdate.");
-                } else if (client1.getUuid() == uuid) {
-                    client1.setSocketMovement(socket);
-                    System.out.println("    Client: " + uuid + " - MovementUpdate.");
-                } else if (client2.getUuid() == uuid) {
-                    client2.setSocketMovement(socket);
-                    System.out.println("    Client: " + uuid + " - MovementUpdate.");
                 }
 
             }
