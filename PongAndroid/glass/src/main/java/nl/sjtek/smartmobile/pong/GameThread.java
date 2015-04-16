@@ -23,6 +23,7 @@ public class GameThread extends Thread {
     @Override
     public void run() {
 
+        //TODO fix close crash
         while (true) {
             if (!Thread.interrupted()) {
                 Canvas canvas = surfaceHolder.lockCanvas();

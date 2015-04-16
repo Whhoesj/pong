@@ -31,9 +31,14 @@ public class ActivityMain extends Activity {
                 Intent intentGame = new Intent(this, ActivityGame.class);
                 startActivity(intentGame);
                 return true;
+            case R.id.action_online_play:
+                Intent intentOnlineGame = new Intent(this, ActivityOnlineGame.class);
+                startActivity(intentOnlineGame);
+                return true;
             case R.id.action_sensor:
                 Intent intentSensors = new Intent(this, ActivitySensor.class);
                 startActivity(intentSensors);
+                return true;
             case R.id.action_exit:
                 finish();
                 return true;

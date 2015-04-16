@@ -25,6 +25,14 @@
         <activity
             android:name=".ActivitySensor"
             android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ActivityOnlineGame"
+            android:label="@string/title_activity_activity_online_game"
+            android:parentActivityName=".ActivityMain" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="nl.sjtek.smartmobile.pong.ActivityMain" />
+        </activity>
     </application>
 
 </manifest>

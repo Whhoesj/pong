@@ -1,8 +1,12 @@
 package nl.sjtek.smartmobile.pong.server;
 
-import java.io.BufferedReader;
+import nl.sjtek.smartmobile.pong.data.ClientUpdate;
+import nl.sjtek.smartmobile.pong.data.GameUpdate;
+import nl.sjtek.smartmobile.pong.data.MovementUpdate;
+
+
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.UUID;
@@ -15,58 +19,76 @@ public class PongServer {
     private Client client1;
     private Client client2;
 
-    public PongServer() throws IOException {
+    public PongServer() throws IOException, ClassNotFoundException {
+        System.out.println("Starting Pong server on port " + PORT + "...");
         serverSocket = new ServerSocket(PORT);
+        setupClients();
     }
 
-    public void start() {
-        try {
-            client1 = new Client();
-            client2 = new Client();
-            while (!client1.isReady() && !client2.isReady()) {
-                Socket socket = serverSocket.accept();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                String inputString = reader.readLine();
-                UUID uuid = UUID.fromString(inputString.split(";")[0]);
-                if (checkSocket(inputString, socket)) {
-                } else {
-                    if (client1.getUuid() == null) {
-                        client1.setUuid(uuid);
-                    } else if (client2.getUuid() == null) {
-                        client2.setUuid(uuid);
-                    }
-                    checkSocket(inputString, socket);
+    private void setupClients() throws IOException, ClassNotFoundException {
+        client1 = new Client();
+        client2 = new Client();
+        System.out.println("Waiting for incoming connections...");
+        while (!client1.isReady() && !client2.isReady()) {
+            Socket socket = serverSocket.accept();
+            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+            ClientUpdate clientUpdate = (ClientUpdate)inputStream.readObject();
+            UUID uuid = clientUpdate.getUuid();
+
+            if (clientUpdate instanceof GameUpdate) {
+
+                if (client1.getUuid() == null) {
+                    client1.setUuid(uuid);
+                    client1.setSocketUpdate(socket);
+                    System.out.println("New client: " + uuid + " - GameUpdate.");
+                } else if (client2.getUuid() == null) {
+                    client2.setUuid(uuid);
+                    client2.setSocketUpdate(socket);
+                    System.out.println("New client: " + uuid + " - GameUpdate.");
+                } else if (client1.getUuid() == uuid) {
+                    client1.setSocketUpdate(socket);
+                    System.out.println("    Client: " + uuid + " - GameUpdate.");
+                } else if (client2.getUuid() == uuid) {
+                    client2.setSocketUpdate(socket);
+                    System.out.println("    Client: " + uuid + " - GameUpdate.");
                 }
-                reader.close();
+
+            } else if (clientUpdate instanceof MovementUpdate) {
+
+                if (client1.getUuid() == null) {
+                    client1.setUuid(uuid);
+                    client1.setSocketMovement(socket);
+                    System.out.println("New client: " + uuid + " - MovementUpdate.");
+                } else if (client2.getUuid() == null) {
+                    client2.setUuid(uuid);
+                    client2.setSocketMovement(socket);
+                    System.out.println("New client: " + uuid + " - MovementUpdate.");
+                } else if (client1.getUuid() == uuid) {
+                    client1.setSocketMovement(socket);
+                    System.out.println("    Client: " + uuid + " - MovementUpdate.");
+                } else if (client2.getUuid() == uuid) {
+                    client2.setSocketMovement(socket);
+                    System.out.println("    Client: " + uuid + " - MovementUpdate.");
+                }
+
             }
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public boolean checkSocket(String inputString, Socket socket1) {
-        UUID uuid = UUID.fromString(inputString.split(";")[0]);
-        if (client1.getUuid() == uuid) {
-            if (inputString.split(";")[1].contains("m")) {
-                client1.setSocketMovement(socket1);
-            } else if (inputString.split(";")[1].contains("u")) {
-                client1.setSocketUpdate(socket1);
-            }
-        } else if (client2.getUuid() == uuid) {
-            if (inputString.split(";")[1].contains("m")) {
-                client2.setSocketMovement(socket1);
-            } else if (inputString.split(";")[1].contains("u")) {
-                client2.setSocketUpdate(socket1);
-            }
-        } else {
-            return false;
+            inputStream.close();
         }
 
-        return true;
+        System.out.println("Ready to start.");
     }
 
-    public static void main(String[] args) {
+    public void run() {
+        GameState gameState = new GameState();
+        while (true) {
+            gameState.setTopBat(client1.getMovementUpdate());
+            gameState.setBottomBat(client2.getMovementUpdate());
+            gameState.update();
+            GameUpdate gameUpdate = gameState.getUpdate();
+            client1.setGameUpdate(gameUpdate);
+            client2.setGameUpdate(gameUpdate);
 
+        }
     }
 }

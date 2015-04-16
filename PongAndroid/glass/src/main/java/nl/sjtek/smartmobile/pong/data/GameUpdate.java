@@ -1,35 +1,67 @@
 package nl.sjtek.smartmobile.pong.data;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 
-public class GameUpdate implements Serializable {
+public class GameUpdate extends ClientUpdate implements Serializable {
 
-    private int balX, balY;
+    private long tick = 0;
+
+    private final int ballSize = 10;
+    private int ballX, ballY;
+    private final int batLength = 75;
+    private final int batHeight = 10;
     private int topBatX, topBatY;
     private int bottomBatX, bottomBatY;
     private boolean doClose = false;
 
-    public GameUpdate(int balX, int balY, int topBatX, int topBatY, int bottomBatX, int bottomBatY) {
-        this.balX = balX;
-        this.balY = balY;
+    public GameUpdate() {
+        super(null);
+    }
+
+    public GameUpdate(UUID uuid) {
+        super(uuid);
+    }
+
+    public GameUpdate(boolean doClose) {
+        super(null);
+        doClose = true;
+    }
+
+    public GameUpdate(long tick, int ballX, int ballY, int topBatX, int topBatY, int bottomBatX, int bottomBatY) {
+        super(null);
+        this.tick = tick;
+        this.ballX = ballX;
+        this.ballY = ballY;
         this.topBatX = topBatX;
         this.topBatY = topBatY;
         this.bottomBatX = bottomBatX;
         this.bottomBatY = bottomBatY;
     }
 
-    public GameUpdate(int balX, int balY, int topBatX, int topBatY, int bottomBatX, int bottomBatY, boolean doClose) {
-        this(balX, balY, topBatX, topBatY, bottomBatX, bottomBatY);
-        this.doClose = doClose;
+    public long getTick() {
+        return tick;
     }
 
-    public int getBalX() {
-        return balX;
+    public int getBallSize() {
+        return ballSize;
     }
 
-    public int getBalY() {
-        return balY;
+    public int getBallX() {
+        return ballX;
+    }
+
+    public int getBallY() {
+        return ballY;
+    }
+
+    public int getBatLength() {
+        return batLength;
+    }
+
+    public int getBatHeight() {
+        return batHeight;
     }
 
     public int getTopBatX() {
