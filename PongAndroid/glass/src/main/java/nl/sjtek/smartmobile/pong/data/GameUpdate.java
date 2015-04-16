@@ -4,10 +4,11 @@ import java.io.Serializable;
 import java.util.UUID;
 
 
-public class GameUpdate extends ClientUpdate implements Serializable {
+public class GameUpdate implements Serializable {
 
     private long tick = 0;
 
+    private final UUID uuid;
     private final int ballSize = 10;
     private int ballX, ballY;
     private final int batLength = 75;
@@ -17,20 +18,20 @@ public class GameUpdate extends ClientUpdate implements Serializable {
     private boolean doClose = false;
 
     public GameUpdate() {
-        super(null);
+        this(null);
     }
 
     public GameUpdate(UUID uuid) {
-        super(uuid);
+        this.uuid = uuid;
     }
 
     public GameUpdate(boolean doClose) {
-        super(null);
+        this(null);
         doClose = true;
     }
 
     public GameUpdate(long tick, int ballX, int ballY, int topBatX, int topBatY, int bottomBatX, int bottomBatY) {
-        super(null);
+        this(null);
         this.tick = tick;
         this.ballX = ballX;
         this.ballY = ballY;
@@ -38,6 +39,10 @@ public class GameUpdate extends ClientUpdate implements Serializable {
         this.topBatY = topBatY;
         this.bottomBatX = bottomBatX;
         this.bottomBatY = bottomBatY;
+    }
+
+    public UUID getUuid() {
+        return uuid;
     }
 
     public long getTick() {

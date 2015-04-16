@@ -1,6 +1,5 @@
 package nl.sjtek.smartmobile.pong.server;
 
-import nl.sjtek.smartmobile.pong.data.ClientUpdate;
 import nl.sjtek.smartmobile.pong.data.GameUpdate;
 import nl.sjtek.smartmobile.pong.data.MovementUpdate;
 
@@ -32,10 +31,12 @@ public class PongServer {
         while (!client1.isReady() && !client2.isReady()) {
             Socket socket = serverSocket.accept();
             ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
-            ClientUpdate clientUpdate = (ClientUpdate)inputStream.readObject();
-            UUID uuid = clientUpdate.getUuid();
+            Object receivedObject = (Object)inputStream.readObject();
 
-            if (clientUpdate instanceof GameUpdate) {
+            if (receivedObject instanceof GameUpdate) {
+
+                GameUpdate receivedGameUpdate = (GameUpdate) receivedObject;
+                UUID uuid = receivedGameUpdate.getUuid();
 
                 if (client1.getUuid() == null) {
                     client1.setUuid(uuid);
@@ -53,7 +54,10 @@ public class PongServer {
                     System.out.println("    Client: " + uuid + " - GameUpdate.");
                 }
 
-            } else if (clientUpdate instanceof MovementUpdate) {
+            } else if (receivedObject instanceof MovementUpdate) {
+
+                MovementUpdate movementUpdate = (MovementUpdate) receivedObject;
+                UUID uuid = movementUpdate.getUuid();
 
                 if (client1.getUuid() == null) {
                     client1.setUuid(uuid);
