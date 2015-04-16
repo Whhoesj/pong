@@ -14,6 +14,10 @@ public class MovementThread implements Runnable {
     private Socket socket;
     private MovementUpdate update;
 
+    public MovementThread(Socket socket) {
+        this.socket = socket;
+    }
+
     public MovementUpdate getMovementUpdate() {
         return update;
     }

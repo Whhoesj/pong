@@ -16,6 +16,10 @@ public class UpdateThread implements Runnable {
     private Socket socket;
     private GameUpdate update;
 
+    public UpdateThread(Socket socket) {
+        this.socket = socket;
+    }
+
     public void setUpdate(GameUpdate update) {
         this.update = update;
     }

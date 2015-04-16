@@ -52,10 +52,11 @@ public class Client {
     }
 
     private void setReady() {
+        System.out.println("Client " + getUuid() + " starting...");
         ready = true;
-        movementThread = new MovementThread();
+        movementThread = new MovementThread(socketMovement);
         movementThread.run();
-        updateThread = new UpdateThread();
+        updateThread = new UpdateThread(socketUpdate);
         updateThread.run();
         System.out.println("Client " + getUuid() + " ready.");
     }
