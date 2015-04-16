@@ -1,9 +1,10 @@
 package nl.sjtek.smartmobile.pong.data;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 
-public class MovementUpdate {
+public class MovementUpdate implements Serializable {
 
     private final UUID uuid;
     private float movementValue;
