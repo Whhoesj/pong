@@ -79,7 +79,7 @@ public class PongServer {
 
             }
 
-            inputStream.close();
+//            inputStream.close();
         }
 
         System.out.println("Ready to start.");

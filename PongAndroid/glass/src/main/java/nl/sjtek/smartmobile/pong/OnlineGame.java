@@ -16,7 +16,7 @@ import nl.sjtek.smartmobile.pong.data.MovementUpdate;
  */
 public class OnlineGame {
 
-    private static final String serverAddress = "192.168.0.107";
+    private static final String serverAddress = "192.168.0.61";
     private static final int port = 1337;
 
     private final UUID uuid = UUID.randomUUID();
@@ -52,6 +52,13 @@ public class OnlineGame {
                 Socket socket = new Socket(serverAddress, port);
                 ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
                 outputStream.writeObject(gameUpdate);
+//                outputStream.close();
+
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
                 ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
 
@@ -73,11 +80,22 @@ public class OnlineGame {
         @Override
         protected Void doInBackground(Void... voids) {
             try {
+                MovementUpdate movementUpdate;
                 Socket socket = new Socket(serverAddress, port);
                 ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
 
+                movementUpdate = new MovementUpdate(uuid, movementValue);
+                outputStream.writeObject(movementUpdate);
+//                outputStream.close();
+
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
                 while (true) {
-                    MovementUpdate movementUpdate = new MovementUpdate(uuid, movementValue);
+                    movementUpdate = new MovementUpdate(uuid, movementValue);
                     outputStream.writeObject(movementUpdate);
                 }
             } catch (IOException e) {
