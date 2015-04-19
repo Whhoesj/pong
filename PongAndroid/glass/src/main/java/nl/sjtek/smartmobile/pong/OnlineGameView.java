@@ -6,12 +6,14 @@ import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import nl.sjtek.smartmobile.pong.data.GameUpdate;
+
 /**
  * Created by wouter on 16-4-15.
  */
 public class OnlineGameView extends SurfaceView implements SurfaceHolder.Callback {
 
-    private GameThread thread;
+    private OnlineGameThread thread;
 
     public OnlineGameView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -21,7 +23,7 @@ public class OnlineGameView extends SurfaceView implements SurfaceHolder.Callbac
         holder.addCallback(this);
 
         //and instantiate the thread
-        thread = new GameThread(holder, context, new Handler());
+        thread = new OnlineGameThread(holder, context, new Handler());
     }
 
     //Implemented as part of the SurfaceHolder.Callback interface
@@ -32,19 +34,20 @@ public class OnlineGameView extends SurfaceView implements SurfaceHolder.Callbac
 
     }
 
-    public void changeBatSpeed(float batSpeed) {
-        thread.getGameState().changeBatSpeed(batSpeed);
+    public void setGameUpdate(GameUpdate gameUpdate) {
+        thread.setGameUpdate(gameUpdate);
     }
 
     //Implemented as part of the SurfaceHolder.Callback interface
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        thread.start();
+        thread.run();
     }
 
     //Implemented as part of the SurfaceHolder.Callback interface
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        thread.stopThread();
+        //TODO stop thread
+//        thread.stop();
     }
 }
