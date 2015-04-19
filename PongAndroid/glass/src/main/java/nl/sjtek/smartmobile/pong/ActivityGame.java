@@ -13,7 +13,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.WindowManager;
-import android.widget.TextView;
 
 
 public class ActivityGame extends Activity implements SensorEventListener {
@@ -21,7 +20,6 @@ public class ActivityGame extends Activity implements SensorEventListener {
     private GameView gameView;
     private SensorManager sensorManager;
     private Sensor sensor;
-//    private TextView textViewRaw, textViewMapped;
     private float valueSmooth = 0;
 
     @Override
@@ -30,8 +28,6 @@ public class ActivityGame extends Activity implements SensorEventListener {
         Log.d(this.getClass().getCanonicalName(), "game start");
         setContentView(R.layout.activity_game);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-//        textViewRaw = (TextView) findViewById(R.id.textViewRaw);
-//        textViewMapped = (TextView) findViewById(R.id.textViewMapped);
         gameView = (GameView) findViewById(R.id.gameView);
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -61,7 +57,7 @@ public class ActivityGame extends Activity implements SensorEventListener {
         int itemId = item.getItemId();
         switch (itemId) {
             case R.id.action_exit:
-                // exit game
+                //TODO clean exit
                 finish();
                 return true;
             default:
@@ -78,14 +74,6 @@ public class ActivityGame extends Activity implements SensorEventListener {
         return super.onKeyDown(keyCode, event);
     }
 
-    public float power(final float base, final int power) {
-        float result = 1;
-        for (int i = 0; i < power; i++) {
-            result *= base;
-        }
-        return result;
-    }
-
     private float map(float x, float in_min, float in_max, float out_min, float out_max) {
         return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
     }
@@ -100,9 +88,6 @@ public class ActivityGame extends Activity implements SensorEventListener {
         float valueMapped = map(sensorEvent.values[0], -2f, 2f, 565f, 0f);
         valueSmooth = exponentialSmoothing(valueMapped, valueSmooth, 0.1f);
         gameView.changeBatSpeed(valueSmooth);
-
-//        textViewRaw.setText(String.valueOf(valueRaw));
-//        textViewMapped.setText(String.valueOf(valueSmooth));
     }
 
     @Override

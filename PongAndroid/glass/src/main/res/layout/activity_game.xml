@@ -1,25 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <view
+        android:id="@+id/gameView"
+        class="nl.sjtek.smartmobile.pong.GameView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        class="nl.sjtek.smartmobile.pong.GameView"
-        android:id="@+id/gameView"
         android:layout_gravity="center" />
 
     <TextView
+        android:id="@+id/textViewRaw"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textViewRaw"
-        android:textColor="@android:color/white"
-        android:layout_gravity="left|center_vertical" />
+        android:layout_gravity="start|center_vertical"
+        android:textColor="@android:color/white" />
 
     <TextView
+        android:id="@+id/textViewMapped"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textViewMapped"
-        android:textColor="@android:color/white"
-        android:layout_gravity="right|center_vertical" />
+        android:layout_gravity="end|center_vertical"
+        android:textColor="@android:color/white" />
 </FrameLayout>

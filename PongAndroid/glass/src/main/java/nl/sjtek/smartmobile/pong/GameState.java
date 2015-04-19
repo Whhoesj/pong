@@ -7,27 +7,21 @@ import android.graphics.Rect;
 
 public class GameState {
 
-    //screen width and height
-    final int screenWidth = 640;
-    final int screenHeight = 360;
+    private final int screenWidth = 640;
+    private final int screenHeight = 360;
 
-    //The ball
-    final int ballSize = 10;
-    int ballX = 100;
-    int ballY = 100;
-    int ballVelocityX = 3;
-    int ballVelocityY = 3;
-
-    //The bats
-    final int batLength = 75;
-    final int batHeight = 10;
-    final int batMargin = 10;
-
-    int topBatX = (screenWidth / 2) - (batLength / 2);
-    final int topBatY = batMargin;
-
-    int bottomBatX = (screenWidth / 2) - (batLength / 2);
-    final int bottomBatY = screenHeight - batHeight - batMargin;
+    private final int ballSize = 10;
+    private final int batLength = 75;
+    private int topBatX = (screenWidth / 2) - (batLength / 2);
+    private int bottomBatX = (screenWidth / 2) - (batLength / 2);
+    private final int batHeight = 10;
+    private final int batMargin = 10;
+    private final int topBatY = batMargin;
+    private final int bottomBatY = screenHeight - batHeight - batMargin;
+    private int ballX = 100;
+    private int ballY = 100;
+    private int ballVelocityX = 3;
+    private int ballVelocityY = 3;
 
 
     public GameState() {
@@ -39,10 +33,10 @@ public class GameState {
         ballX += ballVelocityX;
         ballY += ballVelocityY;
 
-        topBatX = ballX - batLength/2;
+        topBatX = ballX - batLength / 2;
 
         //DEATH!
-        if (ballY > screenHeight - (ballSize/2) || ballY < ballSize/2) {
+        if (ballY > screenHeight - (ballSize / 2) || ballY < ballSize / 2) {
             ballX = 100;
             ballY = 100;
         }    //Collisions with the sides
