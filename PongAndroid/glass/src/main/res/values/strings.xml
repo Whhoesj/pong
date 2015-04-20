@@ -16,4 +16,7 @@
     <string name="host_listening">Listening for a player on:</string>
     <string name="swipe_down_to_cancel">Swipe down to cancel</string>
     <string name="not_implemented">Not yet implemented.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

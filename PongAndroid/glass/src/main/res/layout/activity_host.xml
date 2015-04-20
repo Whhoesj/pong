@@ -1,33 +1,6 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="nl.sjtek.smartmobile.pong.ActivityHost">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:id="@+id/textViewIp"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/host_listening"
-        android:id="@+id/textView4"
-        android:layout_above="@+id/textViewIp"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/swipe_down_to_cancel"
-        android:id="@+id/textView5"
-        android:layout_below="@+id/textViewIp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp" />
-</RelativeLayout>
+    android:id="@+id/frameLayout"
+    tools:context="nl.sjtek.smartmobile.pong.ActivityHost" />

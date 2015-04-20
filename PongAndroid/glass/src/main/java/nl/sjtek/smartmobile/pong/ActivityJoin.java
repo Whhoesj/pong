@@ -12,6 +12,11 @@ public class ActivityJoin extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join);
+        FragmentJoin fragmentJoin = FragmentJoin.newInstance();
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frameLayout, fragmentJoin)
+                .commit();
     }
 
 

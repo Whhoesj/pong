@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 
 public class ActivityHost extends Activity {
@@ -16,8 +15,11 @@ public class ActivityHost extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_host);
-        TextView textView = (TextView) findViewById(R.id.textViewIp);
-        textView.setText(getIpAddress());
+        FragmentHost fragmentHost = FragmentHost.newInstance(getIpAddress());
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frameLayout, fragmentHost)
+                .commit();
     }
 
 
