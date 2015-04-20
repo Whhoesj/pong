@@ -14,6 +14,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.WindowManager;
 
+import nl.sjtek.smartmobile.libpong.ui.GameView;
+
 
 public class ActivityGame extends Activity implements SensorEventListener {
 

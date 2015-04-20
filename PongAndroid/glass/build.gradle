@@ -32,5 +32,6 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile project(':libpong')
+    compile fileTree(include: ['*.jar'], dir: 'libs')
 }

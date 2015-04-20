@@ -1,4 +1,4 @@
-package nl.sjtek.smartmobile.pong;
+package nl.sjtek.smartmobile.libpong.ui;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -7,8 +7,9 @@ import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import nl.sjtek.smartmobile.pong.game.GameState;
-import nl.sjtek.smartmobile.pong.game.GameUpdater;
+import nl.sjtek.smartmobile.libpong.game.GameState;
+import nl.sjtek.smartmobile.libpong.game.GameUpdater;
+
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private final GameThread thread;

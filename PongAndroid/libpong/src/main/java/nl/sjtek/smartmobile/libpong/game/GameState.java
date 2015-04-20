@@ -1,4 +1,4 @@
-package nl.sjtek.smartmobile.pong.game;
+package nl.sjtek.smartmobile.libpong.game;
 
 import java.io.Serializable;
 

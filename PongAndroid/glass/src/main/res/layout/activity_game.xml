@@ -5,7 +5,7 @@
 
     <view
         android:id="@+id/gameView"
-        class="nl.sjtek.smartmobile.pong.GameView"
+        class="nl.sjtek.smartmobile.libpong.ui.GameView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center" />

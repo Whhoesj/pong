@@ -1,4 +1,4 @@
-package nl.sjtek.smartmobile.pong.game;
+package nl.sjtek.smartmobile.libpong.game;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;

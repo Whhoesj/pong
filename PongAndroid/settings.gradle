@@ -1,2 +1,2 @@
-include ':mobile'
+include ':mobile', ':libpong'
 include ':glass'
