@@ -87,7 +87,7 @@ public class ActivityGame extends Activity implements SensorEventListener {
 
         float valueMapped = map(sensorEvent.values[0], -2f, 2f, 565f, 0f);
         valueSmooth = exponentialSmoothing(valueMapped, valueSmooth, 0.1f);
-        gameView.changeBatSpeed(valueSmooth);
+        gameView.setBottomBatX((int) valueSmooth);
     }
 
     @Override

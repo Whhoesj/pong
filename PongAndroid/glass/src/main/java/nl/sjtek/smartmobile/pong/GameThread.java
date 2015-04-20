@@ -4,16 +4,39 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.view.SurfaceHolder;
 
+import nl.sjtek.smartmobile.pong.game.GameState;
+import nl.sjtek.smartmobile.pong.game.GameUpdater;
+
 public class GameThread extends Thread {
 
     private final SurfaceHolder surfaceHolder;
     private final Paint paint;
     private final GameState gameState;
 
+    private boolean multiplayer;
+    private boolean host;
+    private int bottomBatX = 0;
+    private int topBatX = 0;
+
+    public GameThread(SurfaceHolder surfaceHolder, boolean host) {
+        this(surfaceHolder);
+        this.multiplayer = true;
+        this.host = host;
+    }
+
     public GameThread(SurfaceHolder surfaceHolder) {
         this.surfaceHolder = surfaceHolder;
-        paint = new Paint();
-        gameState = new GameState();
+        this.paint = new Paint();
+        this.gameState = new GameState();
+        this.multiplayer = this.host = false;
+    }
+
+    public void setBottomBatX(int x) {
+        this.bottomBatX = x;
+    }
+
+    public void setTopBatX(int x) {
+        topBatX = x;
     }
 
     @Override
@@ -21,14 +44,20 @@ public class GameThread extends Thread {
 
         while (true) {
             Canvas canvas = surfaceHolder.lockCanvas();
-            gameState.update();
-            gameState.draw(canvas, paint);
+            if (multiplayer && host) {
+                GameUpdater.update(gameState, bottomBatX, topBatX);
+            } else {
+                GameUpdater.update(gameState, bottomBatX);
+            }
+
+            if (multiplayer && !host) {
+                GameUpdater.draw(canvas, paint, gameState, true);
+            } else {
+                GameUpdater.draw(canvas, paint, gameState, false);
+            }
+
             surfaceHolder.unlockCanvasAndPost(canvas);
         }
-    }
-
-    public GameState getGameState() {
-        return gameState;
     }
 
     public void stopThread() {

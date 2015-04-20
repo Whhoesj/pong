@@ -22,8 +22,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     }
 
-    public void changeBatSpeed(float batSpeed) {
-        thread.getGameState().changeBatSpeed(batSpeed);
+    public void setBottomBatX(int x) {
+        thread.setBottomBatX(x);
+    }
+
+    public void setTopBatX(int x) {
+        thread.setTopBatX(x);
     }
 
     @Override
