@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="nl.sjtek.smartmobile.pong">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -22,6 +25,22 @@
         <activity
             android:name=".ActivityGame"
             android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ActivityHost"
+            android:label="@string/title_activity_activity_host"
+            android:parentActivityName=".ActivityMain">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="nl.sjtek.smartmobile.pong.ActivityMain" />
+        </activity>
+        <activity
+            android:name=".ActivityJoin"
+            android:label="@string/title_activity_activity_join"
+            android:parentActivityName=".ActivityMain">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="nl.sjtek.smartmobile.pong.ActivityMain" />
+        </activity>
     </application>
 
 </manifest>

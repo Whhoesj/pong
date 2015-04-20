@@ -2,9 +2,28 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/action_play"
+        android:id="@+id/action_singleplayer"
         android:icon="@drawable/ic_glass_logo"
-        android:title="@string/play" />
+        android:title="@string/singleplayer" />
+
+    <item
+        android:id="@+id/action_multiplayer"
+        android:icon="@drawable/ic_glass_logo"
+        android:title="@string/multiplayer">
+
+        <menu>
+            <item
+                android:id="@+id/action_multiplayer_host"
+                android:icon="@drawable/ic_glass_logo"
+                android:title="@string/host_game" />
+
+            <item
+                android:id="@+id/action_multiplayer_join"
+                android:icon="@drawable/ic_glass_logo"
+                android:title="@string/join_game" />
+        </menu>
+
+    </item>
 
     <item
         android:id="@+id/action_exit"

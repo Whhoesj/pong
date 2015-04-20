@@ -27,9 +27,19 @@ public class ActivityMain extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         switch (itemId) {
-            case R.id.action_play:
-                Intent intentGame = new Intent(this, ActivityGame.class);
-                startActivity(intentGame);
+            case R.id.action_singleplayer:
+                Intent intentSingleplayer = new Intent(this, ActivityGame.class);
+                startActivity(intentSingleplayer);
+                return true;
+            case R.id.action_multiplayer_host:
+                //TODO host multiplayer game
+                Intent intentHost = new Intent(this, ActivityHost.class);
+                startActivity(intentHost);
+                return true;
+            case R.id.action_multiplayer_join:
+                //TODO join multiplayer game
+                Intent intentJoin = new Intent(this, ActivityJoin.class);
+                startActivity(intentJoin);
                 return true;
             case R.id.action_exit:
                 finish();

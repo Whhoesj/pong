@@ -69,8 +69,7 @@ public class GameUpdater {
 
         if (swapBats) {
             int oldBottomBatX = bottomBatX;
-            int oldTopBatX = topBatX;
-            bottomBatX = oldTopBatX;
+            bottomBatX = topBatX;
             topBatX = oldBottomBatX;
         }
 
