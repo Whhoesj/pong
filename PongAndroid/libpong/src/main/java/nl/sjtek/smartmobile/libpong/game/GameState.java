@@ -3,7 +3,11 @@ package nl.sjtek.smartmobile.libpong.game;
 import java.io.Serializable;
 
 /**
- * Created by wouter on 20-4-15.
+ * Contains variables for a game of Pong.
+ * <p>
+ *     This file contains all variables needed to draw a game of Pong.<br />
+ *     To be used in a {@link nl.sjtek.smartmobile.libpong.game.GameUpdater}.
+ * </p>
  */
 public class GameState implements Serializable {
 

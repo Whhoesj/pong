@@ -10,7 +10,9 @@ import android.view.SurfaceView;
 import nl.sjtek.smartmobile.libpong.game.GameState;
 import nl.sjtek.smartmobile.libpong.game.GameUpdater;
 
-
+/**
+ * A view to display pong
+ */
 public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private final GameThread thread;
 
@@ -28,25 +30,42 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     }
 
+    /**
+     * Change the X position of the bottom bat.
+     * @param x New X position of the bottom bat
+     */
     public void setBottomBatX(int x) {
         thread.setBottomBatX(x);
     }
 
+    /**
+     * Change the X position of the top bat.
+     * <p>Only for multiplayer.</p>
+     * @param x New X position of the top bat
+     */
     public void setTopBatX(int x) {
         thread.setTopBatX(x);
     }
 
+    /**
+     * Start game cycles
+     * @param holder
+     */
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         thread.start();
     }
 
+    /**
+     * Stop game cycles
+     * @param holder
+     */
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         thread.stopThread();
     }
 
-    public class GameThread extends Thread {
+    private class GameThread extends Thread {
 
         private final SurfaceHolder surfaceHolder;
         private final Paint paint;

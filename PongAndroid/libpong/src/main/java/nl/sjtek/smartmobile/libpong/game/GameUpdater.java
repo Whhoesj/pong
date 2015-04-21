@@ -5,17 +5,41 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 
 /**
- * Created by wouter on 20-4-15.
+ * <h1>Game updater</h1>
+ * Run a game cycle or update the UI.
+ * <p>
+ *     This class can run a game cycle (update ball and check for collisions) for both singleplayer
+ *     and multiplayer. It can also draw Pong.
+ * </p>
+ * <p>
+ *     This class is to be used in a {@link nl.sjtek.smartmobile.libpong.ui.GameView}.
+ * </p>
  */
 public class GameUpdater {
 
     public GameUpdater() {
     }
 
+    /**
+     * Run a game cycle for singleplayer
+     * <p>
+     *     Requires an X position for the bottom bat.<br />
+     *     It will generate an Y position for the top bat.
+     * </p>
+     * @param gs The {@link nl.sjtek.smartmobile.libpong.game.GameState} to update
+     * @param bottomBatX The position of the bottom bat
+     */
     public static void update(GameState gs, int bottomBatX) {
         update(gs, bottomBatX, (gs.getBallX() - gs.getBatLength() / 2));
     }
 
+    /**
+     * Run a game cycle for multiplayer.
+     * <b>Only for the host!</b>
+     * @param gs The {@link nl.sjtek.smartmobile.libpong.game.GameState} to update
+     * @param bottomBatX The position of the bottom bat
+     * @param topBatX The position of the top bat
+     */
     public static void update(GameState gs, int bottomBatX, int topBatX) {
 
         gs.setBallX(gs.getBallX() + gs.getBallVelocityX());
@@ -55,6 +79,13 @@ public class GameUpdater {
         }
     }
 
+    /**
+     * Draw the game to a canvas.
+     * @param canvas The canvas where we have to draw
+     * @param paint Some paint
+     * @param gs The {@link nl.sjtek.smartmobile.libpong.game.GameState} to draw
+     * @param swapBats Swap the top and bottom bat. False for host. True for client.
+     */
     public static void draw(Canvas canvas, Paint paint, final GameState gs, boolean swapBats) {
 
         final int ballSize = gs.getBallSize();
