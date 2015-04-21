@@ -25,7 +25,9 @@ public class AsyncTaskClient extends AsyncTask<Void, Void, Void> {
 
     private GameState gameState;
     private MovementUpdate movementUpdate;
-    private boolean running;
+    private boolean running = true;
+
+    private OnGameChangedListener listener;
 
     /**
      * Setup the {@link android.os.AsyncTask}.
@@ -44,6 +46,7 @@ public class AsyncTaskClient extends AsyncTask<Void, Void, Void> {
         MovementSenderThread movementSenderThread;
 
         try {
+            if (listener != null) listener.onGameChanged(OnGameChangedListener.State.Connecting);
             stateReceiverThread = new StateReceiverThread(
                     new Socket(serverAddress, serverPort));
             movementSenderThread = new MovementSenderThread(
@@ -52,10 +55,16 @@ public class AsyncTaskClient extends AsyncTask<Void, Void, Void> {
             stateReceiverThread.run();
             movementSenderThread.run();
 
-            while (running);
+            if (listener != null) listener.onGameChanged(OnGameChangedListener.State.Running);
+
         } catch (IOException e) {
             e.printStackTrace();
+            running = false;
         }
+
+        while (running);
+
+        if (listener != null) listener.onGameChanged(OnGameChangedListener.State.Stopping);
 
         return null;
     }
@@ -66,6 +75,10 @@ public class AsyncTaskClient extends AsyncTask<Void, Void, Void> {
 
     public void sendMovementUpdate(MovementUpdate movementUpdate) {
         this.movementUpdate = movementUpdate;
+    }
+
+    public void setListener(OnGameChangedListener listener) {
+        this.listener = listener;
     }
 
     private class MovementSenderThread implements Runnable {
@@ -88,8 +101,10 @@ public class AsyncTaskClient extends AsyncTask<Void, Void, Void> {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
+                running = false;
             } catch (InterruptedException e) {
                 e.printStackTrace();
+                running = false;
             }
         }
     }
@@ -113,8 +128,10 @@ public class AsyncTaskClient extends AsyncTask<Void, Void, Void> {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
+                running = false;
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
+                running = false;
             }
         }
     }

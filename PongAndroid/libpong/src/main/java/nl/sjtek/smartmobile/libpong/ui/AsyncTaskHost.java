@@ -31,6 +31,12 @@ public class AsyncTaskHost extends AsyncTask<Void, Void, Void> {
     private GameState gameState;
     private MovementUpdate movementUpdate;
 
+    private OnGameChangedListener listener;
+
+    public void setListener(OnGameChangedListener listener) {
+        this.listener = listener;
+    }
+
     /**
      * Send a new {@link nl.sjtek.smartmobile.libpong.game.GameState} to the client.
      * @param gameState The GameState to send
@@ -60,6 +66,7 @@ public class AsyncTaskHost extends AsyncTask<Void, Void, Void> {
             movementReceiverThread = new MovementReceiverThread(serverSocket.accept());
             stateUpdaterThread.run();
             movementReceiverThread.run();
+            if (listener != null) listener.onGameChanged(OnGameChangedListener.State.Running);
         } catch (IOException e) {
             running = false;
             e.printStackTrace();
@@ -67,6 +74,8 @@ public class AsyncTaskHost extends AsyncTask<Void, Void, Void> {
 
 
         while (running);
+
+        if (listener != null) listener.onGameChanged(OnGameChangedListener.State.Stopping);
 
         return null;
     }
@@ -93,6 +102,7 @@ public class AsyncTaskHost extends AsyncTask<Void, Void, Void> {
                 running = false;
             } catch (InterruptedException e) {
                 e.printStackTrace();
+                running = false;
             }
         }
     }
@@ -115,8 +125,10 @@ public class AsyncTaskHost extends AsyncTask<Void, Void, Void> {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
+                running = false;
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
+                running = false;
             }
         }
     }

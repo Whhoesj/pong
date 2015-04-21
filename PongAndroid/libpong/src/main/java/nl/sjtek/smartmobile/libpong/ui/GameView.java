@@ -2,7 +2,6 @@ package nl.sjtek.smartmobile.libpong.ui;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -14,20 +13,46 @@ import nl.sjtek.smartmobile.libpong.game.GameUpdater;
  * A view to display pong
  */
 public class GameView extends SurfaceView implements SurfaceHolder.Callback {
-    private final GameThread thread;
+
+    private GameThread thread = new GameThread();
+    private SurfaceHolder surfaceHolder;
+    private GameState gameState = new GameState();
+
+    private boolean delayedStart = true;
+    private boolean multiplayer;
+    private boolean host;
 
     public GameView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        SurfaceHolder holder = getHolder();
-        holder.addCallback(this);
+        surfaceHolder = getHolder();
+        surfaceHolder.addCallback(this);
+    }
 
-        thread = new GameThread(holder);
+    public void setSingleplayer() {
+        multiplayer = host = false;
+        delayedStart = false;
+    }
+
+    public void setMultiplayer(boolean isHost) {
+        multiplayer = true;
+        host = isHost;
+        delayedStart = false;
+    }
+
+    @Override
+    public void surfaceCreated(SurfaceHolder surfaceHolder) {
+        thread.start();
     }
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
 
+    }
+
+    @Override
+    public void surfaceDestroyed(SurfaceHolder holder) {
+        thread.stopThread();
     }
 
     /**
@@ -48,46 +73,20 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     /**
-     * Start game cycles
-     * @param holder
+     * Get the current {@link GameState}.
+     * @return The GameState
      */
-    @Override
-    public void surfaceCreated(SurfaceHolder holder) {
-        thread.start();
+    public GameState getGameState() {
+        return gameState;
     }
 
-    /**
-     * Stop game cycles
-     * @param holder
-     */
-    @Override
-    public void surfaceDestroyed(SurfaceHolder holder) {
-        thread.stopThread();
-    }
 
     private class GameThread extends Thread {
 
-        private final SurfaceHolder surfaceHolder;
-        private final Paint paint;
-        private final GameState gameState;
-
-        private boolean multiplayer;
-        private boolean host;
         private int bottomBatX = 0;
         private int topBatX = 0;
 
-        public GameThread(SurfaceHolder surfaceHolder, boolean host) {
-            this(surfaceHolder);
-            this.multiplayer = true;
-            this.host = host;
-        }
-
-        public GameThread(SurfaceHolder surfaceHolder) {
-            this.surfaceHolder = surfaceHolder;
-            this.paint = new Paint();
-            this.gameState = new GameState();
-            this.multiplayer = this.host = false;
-        }
+        private boolean running = true;
 
         public void setBottomBatX(int x) {
             this.bottomBatX = x;
@@ -100,8 +99,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         @Override
         public void run() {
 
-            while (true) {
-                Canvas canvas = surfaceHolder.lockCanvas();
+            while (delayedStart);
+
+            while (running) {
+                Canvas canvas = getHolder().lockCanvas();
                 if (multiplayer && host) {
                     GameUpdater.update(gameState, bottomBatX, topBatX);
                 } else {
@@ -109,9 +110,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                 }
 
                 if (multiplayer && !host) {
-                    GameUpdater.draw(canvas, paint, gameState, true);
+                    GameUpdater.draw(canvas, gameState, true);
                 } else {
-                    GameUpdater.draw(canvas, paint, gameState, false);
+                    GameUpdater.draw(canvas, gameState, false);
                 }
 
                 surfaceHolder.unlockCanvasAndPost(canvas);
@@ -119,7 +120,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         }
 
         public void stopThread() {
-            this.interrupt();
+            running = false;
         }
     }
 }

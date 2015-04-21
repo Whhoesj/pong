@@ -31,6 +31,7 @@ public class ActivityGame extends Activity implements SensorEventListener {
         setContentView(R.layout.activity_game);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         gameView = (GameView) findViewById(R.id.gameView);
+        gameView.setSingleplayer();
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
     }

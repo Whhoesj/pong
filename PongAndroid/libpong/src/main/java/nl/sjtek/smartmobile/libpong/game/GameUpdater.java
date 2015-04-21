@@ -82,11 +82,12 @@ public class GameUpdater {
     /**
      * Draw the game to a canvas.
      * @param canvas The canvas where we have to draw
-     * @param paint Some paint
      * @param gs The {@link nl.sjtek.smartmobile.libpong.game.GameState} to draw
      * @param swapBats Swap the top and bottom bat. False for host. True for client.
      */
-    public static void draw(Canvas canvas, Paint paint, final GameState gs, boolean swapBats) {
+    public static void draw(Canvas canvas, final GameState gs, boolean swapBats) {
+
+        Paint paint = new Paint();
 
         final int ballSize = gs.getBallSize();
         final int ballX = gs.getBallX();
