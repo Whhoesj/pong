@@ -9,6 +9,7 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import nl.sjtek.smartmobile.libpong.game.MovementUpdate;
@@ -33,12 +34,12 @@ public class ActivityHost extends Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_host);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         TextView textViewIp = (TextView) findViewById(R.id.textViewIp);
         textViewIp.setText(Utils.getIpAddress(this));
 
-        asyncTaskHost = new AsyncTaskHost();
-        asyncTaskHost.setListener(this);
+        asyncTaskHost = new AsyncTaskHost(this);
         asyncTaskHost.execute();
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);

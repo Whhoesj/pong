@@ -33,7 +33,7 @@ public class AsyncTaskHost extends AsyncTask<Void, Void, Void> {
 
     private OnGameStateChangedListener listener;
 
-    public void setListener(OnGameStateChangedListener listener) {
+    public AsyncTaskHost(OnGameStateChangedListener listener) {
         this.listener = listener;
     }
 

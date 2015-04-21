@@ -33,10 +33,13 @@ public class AsyncTaskClient extends AsyncTask<Void, Void, Void> {
      * Setup the {@link android.os.AsyncTask}.
      * @param serverAddress The address to connect to
      * @param serverPort The port to connect to
+     * @param listener Callbacks for connection changes
      */
-    public AsyncTaskClient(String serverAddress, int serverPort) {
+    public AsyncTaskClient(String serverAddress, int serverPort,
+                           OnGameStateChangedListener listener) {
         this.serverAddress = serverAddress;
         this.serverPort = serverPort;
+        this.listener = listener;
     }
 
     @Override
@@ -75,10 +78,6 @@ public class AsyncTaskClient extends AsyncTask<Void, Void, Void> {
 
     public void sendMovementUpdate(MovementUpdate movementUpdate) {
         this.movementUpdate = movementUpdate;
-    }
-
-    public void setListener(OnGameStateChangedListener listener) {
-        this.listener = listener;
     }
 
     private class MovementSenderThread implements Runnable {

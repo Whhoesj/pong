@@ -7,6 +7,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.WindowManager;
 
 public class ActivityMain extends Activity {
 
@@ -14,6 +15,7 @@ public class ActivityMain extends Activity {
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         setContentView(R.layout.activity_main);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
     @Override
@@ -32,12 +34,10 @@ public class ActivityMain extends Activity {
                 startActivity(intentSingleplayer);
                 return true;
             case R.id.action_multiplayer_host:
-                //TODO host multiplayer game
                 Intent intentHost = new Intent(this, ActivityHost.class);
                 startActivity(intentHost);
                 return true;
             case R.id.action_multiplayer_join:
-                //TODO join multiplayer game
                 Intent intentJoin = new Intent(this, ActivityJoin.class);
                 startActivity(intentJoin);
                 return true;

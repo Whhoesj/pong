@@ -9,6 +9,7 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
 
 import nl.sjtek.smartmobile.libpong.game.MovementUpdate;
 import nl.sjtek.smartmobile.libpong.ui.AsyncTaskClient;
@@ -30,9 +31,9 @@ public class ActivityJoin extends Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_join);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        asyncTaskClient = new AsyncTaskClient("192.168.0.101", 1337);
-        asyncTaskClient.setListener(this);
+        asyncTaskClient = new AsyncTaskClient("192.168.0.101", 1337, this);
         asyncTaskClient.execute();
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
