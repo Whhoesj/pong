@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.WindowManager;
 
 import nl.sjtek.smartmobile.libpong.ui.GameView;
+import nl.sjtek.smartmobile.libpong.ui.Utils;
 
 
 public class ActivityGame extends Activity implements SensorEventListener {
@@ -77,19 +78,11 @@ public class ActivityGame extends Activity implements SensorEventListener {
         return super.onKeyDown(keyCode, event);
     }
 
-    private float map(float x, float in_min, float in_max, float out_min, float out_max) {
-        return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
-    }
-
-    private float exponentialSmoothing(float input, float output, float alpha) {
-        return (output + alpha * (input - output));
-    }
-
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
 
-        float valueMapped = map(sensorEvent.values[0], -2f, 2f, 565f, 0f);
-        valueSmooth = exponentialSmoothing(valueMapped, valueSmooth, 0.1f);
+        float valueMapped = Utils.map(sensorEvent.values[0], -2f, 2f, 565f, 0f);
+        valueSmooth = Utils.exponentialSmoothing(valueMapped, valueSmooth, 0.1f);
         gameView.setBottomBatX((int) valueSmooth);
     }
 

@@ -31,9 +31,9 @@ public class AsyncTaskHost extends AsyncTask<Void, Void, Void> {
     private GameState gameState;
     private MovementUpdate movementUpdate;
 
-    private OnGameChangedListener listener;
+    private OnGameStateChangedListener listener;
 
-    public void setListener(OnGameChangedListener listener) {
+    public void setListener(OnGameStateChangedListener listener) {
         this.listener = listener;
     }
 
@@ -66,7 +66,7 @@ public class AsyncTaskHost extends AsyncTask<Void, Void, Void> {
             movementReceiverThread = new MovementReceiverThread(serverSocket.accept());
             stateUpdaterThread.run();
             movementReceiverThread.run();
-            if (listener != null) listener.onGameChanged(OnGameChangedListener.State.Running);
+            if (listener != null) listener.onGameChanged(OnGameStateChangedListener.State.Running);
         } catch (IOException e) {
             running = false;
             e.printStackTrace();
@@ -75,7 +75,7 @@ public class AsyncTaskHost extends AsyncTask<Void, Void, Void> {
 
         while (running);
 
-        if (listener != null) listener.onGameChanged(OnGameChangedListener.State.Stopping);
+        if (listener != null) listener.onGameChanged(OnGameStateChangedListener.State.Stopping);
 
         return null;
     }

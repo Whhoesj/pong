@@ -27,7 +27,7 @@ public class AsyncTaskClient extends AsyncTask<Void, Void, Void> {
     private MovementUpdate movementUpdate;
     private boolean running = true;
 
-    private OnGameChangedListener listener;
+    private OnGameStateChangedListener listener;
 
     /**
      * Setup the {@link android.os.AsyncTask}.
@@ -46,7 +46,7 @@ public class AsyncTaskClient extends AsyncTask<Void, Void, Void> {
         MovementSenderThread movementSenderThread;
 
         try {
-            if (listener != null) listener.onGameChanged(OnGameChangedListener.State.Connecting);
+            if (listener != null) listener.onGameChanged(OnGameStateChangedListener.State.Connecting);
             stateReceiverThread = new StateReceiverThread(
                     new Socket(serverAddress, serverPort));
             movementSenderThread = new MovementSenderThread(
@@ -55,7 +55,7 @@ public class AsyncTaskClient extends AsyncTask<Void, Void, Void> {
             stateReceiverThread.run();
             movementSenderThread.run();
 
-            if (listener != null) listener.onGameChanged(OnGameChangedListener.State.Running);
+            if (listener != null) listener.onGameChanged(OnGameStateChangedListener.State.Running);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -64,7 +64,7 @@ public class AsyncTaskClient extends AsyncTask<Void, Void, Void> {
 
         while (running);
 
-        if (listener != null) listener.onGameChanged(OnGameChangedListener.State.Stopping);
+        if (listener != null) listener.onGameChanged(OnGameStateChangedListener.State.Stopping);
 
         return null;
     }
@@ -77,7 +77,7 @@ public class AsyncTaskClient extends AsyncTask<Void, Void, Void> {
         this.movementUpdate = movementUpdate;
     }
 
-    public void setListener(OnGameChangedListener listener) {
+    public void setListener(OnGameStateChangedListener listener) {
         this.listener = listener;
     }
 

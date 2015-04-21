@@ -80,6 +80,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         return gameState;
     }
 
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
+    }
+
 
     private class GameThread extends Thread {
 
