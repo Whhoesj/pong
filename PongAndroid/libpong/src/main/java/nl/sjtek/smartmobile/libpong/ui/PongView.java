@@ -29,11 +29,18 @@ public class PongView extends SurfaceView implements SurfaceHolder.Callback {
         surfaceHolder.addCallback(this);
     }
 
+    /**
+     * Start the PongView in singleplayer mode.
+     */
     public void setSingleplayer() {
         multiplayer = host = false;
         delayedStart = false;
     }
 
+    /**
+     * Start the PongView in multiplayer mode
+     * @param isHost Host switch. (Will disable game calculations if not host)
+     */
     public void setMultiplayer(boolean isHost) {
         multiplayer = true;
         host = isHost;

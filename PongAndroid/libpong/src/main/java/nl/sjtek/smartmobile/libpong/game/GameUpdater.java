@@ -23,7 +23,7 @@ public class GameUpdater {
     /**
      * Run a game cycle for singleplayer
      * <p>
-     * Requires an X position for the bottom bat.<br />
+     * Requires an X position for the bottom bat.<br>
      * It will generate an Y position for the top bat.
      * </p>
      *
