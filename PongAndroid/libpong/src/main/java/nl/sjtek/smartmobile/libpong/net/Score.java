@@ -19,12 +19,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
  * Created by wouter on 22-4-15.
  */
-public class Score {
+public class Score implements Comparable<Score> {
 
     private static final String JSON_PLAYERNAME = "player";
     private static final String JSON_PLAYERSCORE = "playerScore";
@@ -119,5 +120,20 @@ public class Score {
     @Override
     public String toString() {
         return "Name: " + playerName + " Score: " + playerScore;
+    }
+
+
+    @Override
+    public int compareTo(Score score) {
+        int score1 = playerScore;
+        int score2 = score.getPlayerScore();
+
+        if (score1 > score2) {
+            return -1;
+        } else if (score1 < score2) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 }

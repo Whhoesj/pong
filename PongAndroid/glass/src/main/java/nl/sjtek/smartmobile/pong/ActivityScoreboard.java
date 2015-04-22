@@ -8,6 +8,7 @@ import android.widget.TextView;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 import nl.sjtek.smartmobile.libpong.net.Score;
@@ -46,7 +47,7 @@ public class ActivityScoreboard extends Activity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             if (scores != null) {
-
+                Collections.sort(scores);
                 String scoreString = "";
                 for (Score score : scores) {
                     scoreString += score.toString() + "\n";

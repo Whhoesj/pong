@@ -14,6 +14,8 @@ import android.widget.ListView;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import nl.sjtek.smartmobile.libpong.net.Score;
@@ -89,8 +91,11 @@ public class ActivityMain extends Activity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            scoreAdapter = new ScoreAdapter(activity, scores);
-            listViewScores.setAdapter(scoreAdapter);
+            if (scores != null) {
+                Collections.sort(scores);
+                scoreAdapter = new ScoreAdapter(activity, scores);
+                listViewScores.setAdapter(scoreAdapter);
+            }
         }
     }
 }
