@@ -16,7 +16,7 @@ public class PongView extends SurfaceView implements SurfaceHolder.Callback {
 
     private GameThread thread = new GameThread();
     private SurfaceHolder surfaceHolder;
-    private PongState pongState = new PongState();
+    private PongState pongState = new PongState(0, 0);
 
     private boolean delayedStart = true;
     private boolean multiplayer;
@@ -42,6 +42,7 @@ public class PongView extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
+        pongState = new PongState(this.getWidth(), this.getHeight());
         thread.start();
     }
 

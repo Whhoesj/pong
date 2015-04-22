@@ -11,17 +11,17 @@ import java.io.Serializable;
  */
 public class PongState implements Serializable {
 
-    private final int screenWidth = 640;
-    private final int screenHeight = 360;
+    private final int screenWidth;
+    private final int screenHeight;
 
     private final int ballSize = 10;
     private final int batLength = 75;
-    private int topBatX = (screenWidth / 2) - (batLength / 2);
-    private int bottomBatX = (screenWidth / 2) - (batLength / 2);
+    private int topBatX = 0;
+    private int bottomBatX = 0;
     private final int batHeight = 10;
     private final int batMargin = 10;
     private final int topBatY = batMargin;
-    private final int bottomBatY = screenHeight - batHeight - batMargin;
+    private final int bottomBatY;
     private int ballX = 100;
     private int ballY = 100;
     private int ballVelocityX = 3;
@@ -29,6 +29,12 @@ public class PongState implements Serializable {
 
     private int scoreBottom = 0;
     private int scoreTop = 0;
+
+    public PongState(int screenWidth, int screenHeight) {
+        this.screenWidth = screenWidth;
+        this.screenHeight = screenHeight;
+        this.bottomBatY = screenHeight - batHeight - batMargin;
+    }
 
     public int getScreenWidth() {
         return screenWidth;
