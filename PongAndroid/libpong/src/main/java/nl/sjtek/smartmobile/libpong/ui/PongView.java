@@ -15,7 +15,7 @@ import nl.sjtek.smartmobile.libpong.game.GameUpdater;
 public class PongView extends SurfaceView implements SurfaceHolder.Callback {
 
     private GameThread thread = new GameThread();
-    private SurfaceHolder surfaceHolder;
+    private final SurfaceHolder surfaceHolder;
     private PongState pongState = new PongState(0, 0);
 
     private boolean delayedStart = true;
@@ -43,6 +43,7 @@ public class PongView extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
         pongState = new PongState(this.getWidth(), this.getHeight());
+        thread.setRunning(true);
         thread.start();
     }
 
@@ -53,7 +54,15 @@ public class PongView extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        thread.stopThread();
+        thread.setRunning(false);
+        while (true) {
+            try {
+                thread.join();
+                break;
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
@@ -109,26 +118,37 @@ public class PongView extends SurfaceView implements SurfaceHolder.Callback {
 
             while (delayedStart) ;
 
+            Canvas canvas = null;
             while (running) {
-                Canvas canvas = getHolder().lockCanvas();
-                if ((multiplayer && host)) {
-                    GameUpdater.update(pongState, bottomBatX, topBatX);
-                } else if (!multiplayer) {
-                    GameUpdater.update(pongState, bottomBatX);
+                try {
+                    canvas = getHolder().lockCanvas();
+                    synchronized (surfaceHolder) {
+                        if ((multiplayer && host)) {
+                            GameUpdater.update(pongState, bottomBatX, topBatX);
+                        } else if (!multiplayer) {
+                            GameUpdater.update(pongState, bottomBatX);
+                        }
+
+                        if (multiplayer && !host) {
+                            GameUpdater.draw(canvas, pongState, true);
+                        } else {
+                            GameUpdater.draw(canvas, pongState, false);
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    running = false;
+                } finally {
+                    if (canvas != null) {
+                        surfaceHolder.unlockCanvasAndPost(canvas);
+                    }
                 }
 
-                if (multiplayer && !host) {
-                    GameUpdater.draw(canvas, pongState, true);
-                } else {
-                    GameUpdater.draw(canvas, pongState, false);
-                }
-
-                surfaceHolder.unlockCanvasAndPost(canvas);
             }
         }
 
-        public void stopThread() {
-            running = false;
+        public void setRunning(boolean running) {
+            this.running = running;
         }
     }
 }
