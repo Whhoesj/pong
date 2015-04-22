@@ -24,8 +24,8 @@ public class PongState implements Serializable {
     private final int bottomBatY;
     private int ballX = 100;
     private int ballY = 100;
-    private int ballVelocityX = 3;
-    private int ballVelocityY = 3;
+    private int ballVelocityX = 5;
+    private int ballVelocityY = 5;
 
     private int scoreBottom = 0;
     private int scoreTop = 0;

@@ -31,7 +31,16 @@ public class GameUpdater {
      * @param bottomBatX The position of the bottom bat
      */
     public static void update(PongState pongState, int bottomBatX) {
-        update(pongState, bottomBatX, (pongState.getBallX() - pongState.getBatLength() / 2));
+        int ballX = pongState.getBallX() - (pongState.getBatLength() / 2);
+        int topBatX = pongState.getTopBatX();
+        int newTopBatX = topBatX;
+        int ballVelocityX = pongState.getBallVelocityX() - 1;
+        if (topBatX > ballX) {
+            newTopBatX += -Math.abs(ballVelocityX);
+        } else if (topBatX < ballX) {
+            newTopBatX += Math.abs(ballVelocityX);
+        }
+        update(pongState, bottomBatX, newTopBatX);
     }
 
     /**
