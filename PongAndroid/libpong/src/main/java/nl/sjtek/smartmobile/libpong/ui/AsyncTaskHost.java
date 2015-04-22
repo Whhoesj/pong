@@ -29,6 +29,8 @@ public class AsyncTaskHost extends AsyncTask<Void, Void, Void> {
      */
     public static final int PORT = 1337;
 
+    private final GameView gameView;
+
     private boolean running = true;
 
     private GameState gameState;
@@ -36,8 +38,9 @@ public class AsyncTaskHost extends AsyncTask<Void, Void, Void> {
 
     private OnGameStateChangedListener listener;
 
-    public AsyncTaskHost(OnGameStateChangedListener listener) {
+    public AsyncTaskHost(OnGameStateChangedListener listener, GameView gameView) {
         this.listener = listener;
+        this.gameView = gameView;
     }
 
     /**
@@ -85,6 +88,11 @@ public class AsyncTaskHost extends AsyncTask<Void, Void, Void> {
         return null;
     }
 
+    @Override
+    protected void onProgressUpdate(Void... values) {
+        gameView.setTopBatX(movementUpdate.getValue());
+    }
+
     private class StateUpdaterThread implements Runnable {
 
         private final Socket socket;
@@ -129,6 +137,7 @@ public class AsyncTaskHost extends AsyncTask<Void, Void, Void> {
 
                 while (running) {
                     movementUpdate = (MovementUpdate) objectInputStream.readObject();
+                    publishProgress();
                 }
             } catch (IOException e) {
                 e.printStackTrace();

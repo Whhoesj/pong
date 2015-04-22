@@ -45,7 +45,7 @@ public class ActivityJoin extends Activity
 //        textViewConnecting.setVisibility(View.VISIBLE);
 
 
-        asyncTaskClient = new AsyncTaskClient("192.168.0.62", 1337, this);
+        asyncTaskClient = new AsyncTaskClient("192.168.0.62", 1337, this, gameView);
         asyncTaskClient.execute();
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);

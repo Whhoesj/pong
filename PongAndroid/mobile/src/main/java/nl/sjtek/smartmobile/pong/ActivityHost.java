@@ -48,7 +48,7 @@ public class ActivityHost extends Activity
         textViewIp = (TextView) findViewById(R.id.textViewIp);
         textViewIp.setText(Utils.getIpAddress(this));
 
-        asyncTaskHost = new AsyncTaskHost(this);
+        asyncTaskHost = new AsyncTaskHost(this, gameView);
         asyncTaskHost.execute();
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
