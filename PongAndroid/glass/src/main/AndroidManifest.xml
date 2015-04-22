@@ -43,11 +43,11 @@
         </activity>
         <activity
             android:name=".ActivitySendScore"
-            android:label="@string/title_activity_activity_send_score" >
+            android:label="@string/send_score" >
         </activity>
         <activity
             android:name=".ActivityScoreboard"
-            android:label="@string/title_activity_activity_scoreboard" >
+            android:label="@string/scoreboard" >
         </activity>
     </application>
 

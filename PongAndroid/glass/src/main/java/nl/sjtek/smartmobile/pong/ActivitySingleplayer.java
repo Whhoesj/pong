@@ -26,6 +26,7 @@ public class ActivitySingleplayer extends Activity implements SensorEventListene
     private SensorManager sensorManager;
     private Sensor sensor;
     private float valueSmooth = 0;
+    private boolean done = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +81,6 @@ public class ActivitySingleplayer extends Activity implements SensorEventListene
         return super.onKeyDown(keyCode, event);
     }
 
-    private boolean done = false;
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
 

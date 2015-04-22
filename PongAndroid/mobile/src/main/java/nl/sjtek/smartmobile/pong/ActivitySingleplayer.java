@@ -24,6 +24,7 @@ public class ActivitySingleplayer extends ActionBarActivity implements SensorEve
     private SensorManager sensorManager;
     private Sensor sensor;
     private float valueSmooth = 0;
+    private boolean done = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +60,6 @@ public class ActivitySingleplayer extends ActionBarActivity implements SensorEve
         int id = item.getItemId();
         return super.onOptionsItemSelected(item);
     }
-
-    private boolean done = false;
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {

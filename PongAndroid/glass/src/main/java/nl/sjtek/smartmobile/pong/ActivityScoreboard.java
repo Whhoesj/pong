@@ -3,8 +3,6 @@ package nl.sjtek.smartmobile.pong;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -31,6 +29,7 @@ public class ActivityScoreboard extends Activity {
     private class ScoreBoardTask extends AsyncTask<Void, Void, Void> {
 
         private List<Score> scores = null;
+
         @Override
         protected Void doInBackground(Void... voids) {
             try {
@@ -50,7 +49,7 @@ public class ActivityScoreboard extends Activity {
 
                 String scoreString = "";
                 for (Score score : scores) {
-                   scoreString += score.toString() + "\n";
+                    scoreString += score.toString() + "\n";
                 }
                 textView.setText(scoreString);
             }
