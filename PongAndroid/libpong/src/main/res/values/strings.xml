@@ -18,6 +18,7 @@
     <string name="host_listening">Listening for a player on:</string>
     <string name="swipe_down_to_cancel">Swipe down to cancel</string>
     <string name="not_implemented">Not implemented</string>
+    <string name="tap_to_send">Tap to send</string>
 
     <string name="connecting">Connecting…</string>
 </resources>
