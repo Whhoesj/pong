@@ -10,6 +10,7 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -37,6 +38,13 @@ public class Score {
         this.playerName = playerName;
         this.playerScore = playerScore;
         this.aiScore = aiScore;
+    }
+
+    public Score(String json) throws JSONException {
+        JSONObject jsonObject = new JSONObject(json);
+        this.playerName = jsonObject.getString(JSON_PLAYERNAME);
+        this.playerScore = jsonObject.getInt(JSON_PLAYERSCORE);
+        this.aiScore = jsonObject.getInt(JSON_AISCORE);
     }
 
     public String getPlayerName() {
@@ -75,7 +83,17 @@ public class Score {
 
         if (responseCode != 200) {
             Log.e("ScoreSender", "Response: " + responseCode);
-        } else {
+        }
+
+    }
+
+    public static List<Score> downloadScoreboard() throws IOException, JSONException {
+        HttpClient client  = new DefaultHttpClient();
+        HttpPost httpPost = new HttpPost("http://smartmobile.sjtek.nl/getScoreboard.php");
+
+        HttpResponse response = client.execute(httpPost);
+
+        if (response.getStatusLine().getStatusCode() == 200) {
             BufferedReader reader = new BufferedReader(
                     new InputStreamReader(response.getEntity().getContent()));
             String json = "";
@@ -84,7 +102,17 @@ public class Score {
                 json += line;
             }
 
-        }
+            JSONArray jsonArray = new JSONArray(json);
 
+            List<Score> scores = new ArrayList<>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                scores.add(new Score(jsonArray.get(i).toString()));
+            }
+
+            return scores;
+        } else {
+            Log.e("DownloadScoreboard", "Response: " + response.getStatusLine().getStatusCode());
+            return null;
+        }
     }
 }
