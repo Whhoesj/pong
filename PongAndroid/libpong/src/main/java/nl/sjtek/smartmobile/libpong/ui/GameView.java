@@ -107,10 +107,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
             while (running) {
                 Canvas canvas = getHolder().lockCanvas();
-                if (multiplayer && host) {
+                if ((multiplayer && host) || !multiplayer) {
                     GameUpdater.update(gameState, bottomBatX, topBatX);
-                } else {
-                    GameUpdater.update(gameState, bottomBatX);
                 }
 
                 if (multiplayer && !host) {

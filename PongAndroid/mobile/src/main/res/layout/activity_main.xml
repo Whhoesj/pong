@@ -9,8 +9,8 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/multiplayer"
-        android:id="@+id/buttonMultiplayer"
+        android:text="@string/host_game"
+        android:id="@+id/buttonHost"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:onClick="onClick" />
@@ -20,16 +20,16 @@
         android:layout_height="wrap_content"
         android:text="@string/singleplayer"
         android:id="@+id/buttonSingleplayer"
-        android:layout_above="@+id/buttonMultiplayer"
+        android:layout_above="@+id/buttonHost"
         android:layout_centerHorizontal="true"
         android:onClick="onClick" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/scoreboard"
-        android:id="@+id/buttonScoreboard"
-        android:layout_below="@+id/buttonMultiplayer"
+        android:text="@string/join_game"
+        android:id="@+id/buttonJoin"
+        android:layout_below="@+id/buttonHost"
         android:layout_centerHorizontal="true"
         android:onClick="onClick" />
 

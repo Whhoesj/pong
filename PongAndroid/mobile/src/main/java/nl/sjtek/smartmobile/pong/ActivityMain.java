@@ -48,9 +48,13 @@ public class ActivityMain extends ActionBarActivity {
                 Intent intentSingleplayer = new Intent(this, ActivitySingleplayer.class);
                 startActivity(intentSingleplayer);
                 break;
-            case R.id.buttonMultiplayer:
+            case R.id.buttonHost:
+                Intent intentHost = new Intent(this, ActivityHost.class);
+                startActivity(intentHost);
                 break;
-            case R.id.buttonScoreboard:
+            case R.id.buttonJoin:
+                Intent intentJoin = new Intent(this, ActivityJoin.class);
+                startActivity(intentJoin);
                 break;
         }
     }

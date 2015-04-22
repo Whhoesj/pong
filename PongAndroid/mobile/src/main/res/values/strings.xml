@@ -8,4 +8,6 @@
     <string name="multiplayer">Multiplayer</string>
     <string name="scoreboard">Scoreboard</string>
     <string name="title_activity_activity_singleplayer">ActivitySingleplayer</string>
+    <string name="title_activity_activity_host">ActivityHost</string>
+    <string name="title_activity_activity_join">ActivityJoin</string>
 </resources>

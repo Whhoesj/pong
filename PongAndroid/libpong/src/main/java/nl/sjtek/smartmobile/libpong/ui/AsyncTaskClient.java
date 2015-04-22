@@ -1,6 +1,7 @@
 package nl.sjtek.smartmobile.libpong.ui;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -20,10 +21,12 @@ import nl.sjtek.smartmobile.libpong.game.MovementUpdate;
  */
 public class AsyncTaskClient extends AsyncTask<Void, Void, Void> {
 
+    private static final String DEBUG_TAG = "AsyncTaskClient";
+
     private final String serverAddress;
     private final int serverPort;
 
-    private GameState gameState;
+    private GameState gameState = new GameState();
     private MovementUpdate movementUpdate;
     private boolean running = true;
 
@@ -50,10 +53,12 @@ public class AsyncTaskClient extends AsyncTask<Void, Void, Void> {
 
         try {
             if (listener != null) listener.onGameChanged(OnGameStateChangedListener.State.Connecting);
+            Log.d(DEBUG_TAG, "Connecting...");
             stateReceiverThread = new StateReceiverThread(
                     new Socket(serverAddress, serverPort));
             movementSenderThread = new MovementSenderThread(
                     new Socket(serverAddress, serverPort));
+            Log.d(DEBUG_TAG, "Connected");
 
             stateReceiverThread.run();
             movementSenderThread.run();
@@ -96,6 +101,7 @@ public class AsyncTaskClient extends AsyncTask<Void, Void, Void> {
 
                 while (running) {
                     objectOutputStream.writeObject(movementUpdate);
+                    objectOutputStream.flush();
                     Thread.sleep(50);
                 }
             } catch (IOException e) {
@@ -123,7 +129,9 @@ public class AsyncTaskClient extends AsyncTask<Void, Void, Void> {
                         new ObjectInputStream(socket.getInputStream());
 
                 while (running) {
-                    gameState = (GameState) objectInputStream.readObject();
+                    GameState receivedGameState = (GameState) objectInputStream.readObject();
+                    gameState = receivedGameState;
+                    Thread.sleep(100);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -131,6 +139,8 @@ public class AsyncTaskClient extends AsyncTask<Void, Void, Void> {
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
                 running = false;
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
     }

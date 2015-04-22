@@ -1,6 +1,7 @@
 package nl.sjtek.smartmobile.libpong.ui;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -21,6 +22,8 @@ import nl.sjtek.smartmobile.libpong.game.MovementUpdate;
  */
 public class AsyncTaskHost extends AsyncTask<Void, Void, Void> {
 
+    private static final String DEBUG_TAG = "AsyncTaskHost";
+
     /**
      * The port the host will listen to.
      */
@@ -29,7 +32,7 @@ public class AsyncTaskHost extends AsyncTask<Void, Void, Void> {
     private boolean running = true;
 
     private GameState gameState;
-    private MovementUpdate movementUpdate;
+    private MovementUpdate movementUpdate = new MovementUpdate(0);
 
     private OnGameStateChangedListener listener;
 
@@ -62,8 +65,10 @@ public class AsyncTaskHost extends AsyncTask<Void, Void, Void> {
 
         try {
             serverSocket = new ServerSocket(PORT);
+            Log.d(DEBUG_TAG, "Waiting for client...");
             stateUpdaterThread = new StateUpdaterThread(serverSocket.accept());
             movementReceiverThread = new MovementReceiverThread(serverSocket.accept());
+            Log.d(DEBUG_TAG, "Client connected");
             stateUpdaterThread.run();
             movementReceiverThread.run();
             if (listener != null) listener.onGameChanged(OnGameStateChangedListener.State.Running);
@@ -93,9 +98,11 @@ public class AsyncTaskHost extends AsyncTask<Void, Void, Void> {
             try {
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
 
+
                 while (running) {
                     objectOutputStream.writeObject(gameState);
-                    Thread.sleep(50);
+                    objectOutputStream.flush();
+                    Thread.sleep(100);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
