@@ -1,5 +1,6 @@
 package nl.sjtek.smartmobile.pong;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
@@ -18,7 +19,7 @@ import nl.sjtek.smartmobile.libpong.ui.PongView;
 import nl.sjtek.smartmobile.libpong.ui.Utils;
 
 
-public class ActivitySingleplayer extends ActionBarActivity implements SensorEventListener {
+public class ActivitySingleplayer extends Activity implements SensorEventListener {
 
     private PongView pongView;
     private SensorManager sensorManager;

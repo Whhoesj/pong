@@ -11,7 +11,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        style="@style/AppTheme.TextView.Name" />
 
     <TextView
         android:id="@+id/textViewScore"
@@ -20,5 +20,5 @@
         android:layout_alignBottom="@+id/textViewName"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        style="@style/AppTheme.TextView.Score" />
 </RelativeLayout>

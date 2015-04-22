@@ -1,5 +1,6 @@
 package nl.sjtek.smartmobile.pong;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
@@ -10,7 +11,7 @@ import nl.sjtek.smartmobile.libpong.net.Score;
 import nl.sjtek.smartmobile.libpong.net.ScoreSender;
 
 
-public class ActivitySendScore extends ActionBarActivity {
+public class ActivitySendScore extends Activity {
 
     public static final String EXTRA_SCORE_PLAYER = "score_player";
     public static final String EXTRA_SCORE_AI = "score_ai";

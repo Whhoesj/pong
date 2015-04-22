@@ -1,11 +1,12 @@
 package nl.sjtek.smartmobile.pong;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.WindowManager;
 
 
-public class ActivityJoin extends ActionBarActivity {
+public class ActivityJoin extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

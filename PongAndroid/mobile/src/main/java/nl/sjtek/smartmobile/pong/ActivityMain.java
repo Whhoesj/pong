@@ -19,7 +19,7 @@ import java.util.List;
 import nl.sjtek.smartmobile.libpong.net.Score;
 
 
-public class ActivityMain extends ActionBarActivity {
+public class ActivityMain extends Activity {
 
     private ListView listViewScores;
     private ScoreAdapter scoreAdapter;
