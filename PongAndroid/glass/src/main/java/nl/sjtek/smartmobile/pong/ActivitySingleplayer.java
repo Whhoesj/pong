@@ -18,7 +18,7 @@ import nl.sjtek.smartmobile.libpong.ui.PongView;
 import nl.sjtek.smartmobile.libpong.ui.Utils;
 
 
-public class ActivityGame extends Activity implements SensorEventListener {
+public class ActivitySingleplayer extends Activity implements SensorEventListener {
 
     private PongView pongView;
     private SensorManager sensorManager;
@@ -29,7 +29,7 @@ public class ActivityGame extends Activity implements SensorEventListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(this.getClass().getCanonicalName(), "game start");
-        setContentView(R.layout.activity_game);
+        setContentView(R.layout.activity_singleplayer);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         pongView = (PongView) findViewById(R.id.pongView);
         pongView.setSingleplayer();

@@ -23,7 +23,7 @@
                 android:resource="@xml/voice_trigger" />
         </activity>
         <activity
-            android:name=".ActivityGame"
+            android:name=".ActivitySingleplayer"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".ActivityHost"

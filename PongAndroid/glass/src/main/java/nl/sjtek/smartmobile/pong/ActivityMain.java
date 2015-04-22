@@ -30,7 +30,7 @@ public class ActivityMain extends Activity {
         int itemId = item.getItemId();
         switch (itemId) {
             case R.id.action_singleplayer:
-                Intent intentSingleplayer = new Intent(this, ActivityGame.class);
+                Intent intentSingleplayer = new Intent(this, ActivitySingleplayer.class);
                 startActivity(intentSingleplayer);
                 return true;
             case R.id.action_multiplayer_host:
