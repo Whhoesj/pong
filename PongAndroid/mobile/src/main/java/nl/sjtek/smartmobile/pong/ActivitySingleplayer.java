@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Surface;
 import android.view.WindowManager;
 
 import nl.sjtek.smartmobile.libpong.ui.PongView;
@@ -60,7 +61,15 @@ public class ActivitySingleplayer extends ActionBarActivity implements SensorEve
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
 
-        float valueMapped = Utils.map(sensorEvent.values[0], -2f, 2f, 565f, 0f);
+        float valueMapped;
+        int orientation = getWindowManager().getDefaultDisplay().getRotation();
+
+        if (orientation == Surface.ROTATION_270) {
+            valueMapped = Utils.map(sensorEvent.values[1], -2f, 2f, 565f, 0f);
+        } else {
+            valueMapped = Utils.map(sensorEvent.values[1], 2f, -2f, 565f, 0f);
+        }
+
         valueSmooth = Utils.exponentialSmoothing(valueMapped, valueSmooth, 0.1f);
         pongView.setBottomBatX((int) valueSmooth);
     }
