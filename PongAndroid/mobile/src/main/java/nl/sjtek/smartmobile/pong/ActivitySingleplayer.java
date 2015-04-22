@@ -1,6 +1,7 @@
 package nl.sjtek.smartmobile.pong;
 
 import android.content.Context;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -12,6 +13,7 @@ import android.view.MenuItem;
 import android.view.Surface;
 import android.view.WindowManager;
 
+import nl.sjtek.smartmobile.libpong.game.PongState;
 import nl.sjtek.smartmobile.libpong.ui.PongView;
 import nl.sjtek.smartmobile.libpong.ui.Utils;
 
@@ -58,6 +60,8 @@ public class ActivitySingleplayer extends ActionBarActivity implements SensorEve
         return super.onOptionsItemSelected(item);
     }
 
+    private boolean done = false;
+
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
 
@@ -72,6 +76,18 @@ public class ActivitySingleplayer extends ActionBarActivity implements SensorEve
 
         valueSmooth = Utils.exponentialSmoothing(valueMapped, valueSmooth, 0.1f);
         pongView.setBottomBatX((int) valueSmooth);
+
+        PongState pongState = pongView.getPongState();
+        int scoreBottom = pongState.getScoreBottom();
+        int scoreTop = pongState.getScoreTop();
+        if ((scoreBottom > 20 || scoreTop > 20) && !done) {
+            done = true;
+            Intent scoreIntent = new Intent(this, ActivitySendScore.class);
+            scoreIntent.putExtra(ActivitySendScore.EXTRA_SCORE_PLAYER, scoreBottom);
+            scoreIntent.putExtra(ActivitySendScore.EXTRA_SCORE_AI, scoreTop);
+            startActivity(scoreIntent);
+            finish();
+        }
     }
 
     @Override
