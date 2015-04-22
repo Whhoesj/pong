@@ -9,7 +9,7 @@ import java.io.Serializable;
  * To be used in a {@link nl.sjtek.smartmobile.libpong.game.GameUpdater}.
  * </p>
  */
-public class GameState implements Serializable {
+public class PongState implements Serializable {
 
     private final int screenWidth = 640;
     private final int screenHeight = 360;

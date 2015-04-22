@@ -6,23 +6,23 @@ import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import nl.sjtek.smartmobile.libpong.game.GameState;
+import nl.sjtek.smartmobile.libpong.game.PongState;
 import nl.sjtek.smartmobile.libpong.game.GameUpdater;
 
 /**
  * A view to display pong
  */
-public class GameView extends SurfaceView implements SurfaceHolder.Callback {
+public class PongView extends SurfaceView implements SurfaceHolder.Callback {
 
     private GameThread thread = new GameThread();
     private SurfaceHolder surfaceHolder;
-    private GameState gameState = new GameState();
+    private PongState pongState = new PongState();
 
     private boolean delayedStart = true;
     private boolean multiplayer;
     private boolean host;
 
-    public GameView(Context context, AttributeSet attrs) {
+    public PongView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         surfaceHolder = getHolder();
@@ -75,16 +75,16 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     /**
-     * Get the current {@link GameState}.
+     * Get the current {@link nl.sjtek.smartmobile.libpong.game.PongState}.
      *
-     * @return The GameState
+     * @return The PongState
      */
-    public GameState getGameState() {
-        return gameState;
+    public PongState getPongState() {
+        return pongState;
     }
 
-    public void setGameState(GameState gameState) {
-        this.gameState = gameState;
+    public void setPongState(PongState pongState) {
+        this.pongState = pongState;
     }
 
 
@@ -111,15 +111,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             while (running) {
                 Canvas canvas = getHolder().lockCanvas();
                 if ((multiplayer && host)) {
-                    GameUpdater.update(gameState, bottomBatX, topBatX);
+                    GameUpdater.update(pongState, bottomBatX, topBatX);
                 } else if (!multiplayer) {
-                    GameUpdater.update(gameState, bottomBatX);
+                    GameUpdater.update(pongState, bottomBatX);
                 }
 
                 if (multiplayer && !host) {
-                    GameUpdater.draw(canvas, gameState, true);
+                    GameUpdater.draw(canvas, pongState, true);
                 } else {
-                    GameUpdater.draw(canvas, gameState, false);
+                    GameUpdater.draw(canvas, pongState, false);
                 }
 
                 surfaceHolder.unlockCanvasAndPost(canvas);

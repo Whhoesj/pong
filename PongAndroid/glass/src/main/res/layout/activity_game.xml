@@ -4,8 +4,8 @@
     android:layout_height="match_parent">
 
     <view
-        android:id="@+id/gameView"
-        class="nl.sjtek.smartmobile.libpong.ui.GameView"
+        android:id="@+id/pongView"
+        class="nl.sjtek.smartmobile.libpong.ui.PongView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center" />

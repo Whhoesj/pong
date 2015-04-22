@@ -14,13 +14,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.WindowManager;
 
-import nl.sjtek.smartmobile.libpong.ui.GameView;
+import nl.sjtek.smartmobile.libpong.ui.PongView;
 import nl.sjtek.smartmobile.libpong.ui.Utils;
 
 
 public class ActivityGame extends Activity implements SensorEventListener {
 
-    private GameView gameView;
+    private PongView pongView;
     private SensorManager sensorManager;
     private Sensor sensor;
     private float valueSmooth = 0;
@@ -31,8 +31,8 @@ public class ActivityGame extends Activity implements SensorEventListener {
         Log.d(this.getClass().getCanonicalName(), "game start");
         setContentView(R.layout.activity_game);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        gameView = (GameView) findViewById(R.id.gameView);
-        gameView.setSingleplayer();
+        pongView = (PongView) findViewById(R.id.pongView);
+        pongView.setSingleplayer();
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
     }
@@ -83,7 +83,7 @@ public class ActivityGame extends Activity implements SensorEventListener {
 
         float valueMapped = Utils.map(sensorEvent.values[0], -2f, 2f, 565f, 0f);
         valueSmooth = Utils.exponentialSmoothing(valueMapped, valueSmooth, 0.1f);
-        gameView.setBottomBatX((int) valueSmooth);
+        pongView.setBottomBatX((int) valueSmooth);
     }
 
     @Override

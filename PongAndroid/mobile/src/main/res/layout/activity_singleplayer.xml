@@ -10,8 +10,8 @@
     tools:context="nl.sjtek.smartmobile.pong.ActivitySingleplayer">
 
     <view
-        android:id="@+id/gameView"
-        class="nl.sjtek.smartmobile.libpong.ui.GameView"
+        android:id="@+id/pongView"
+        class="nl.sjtek.smartmobile.libpong.ui.PongView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

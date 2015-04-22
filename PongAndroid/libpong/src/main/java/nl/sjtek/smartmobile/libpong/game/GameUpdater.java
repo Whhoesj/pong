@@ -12,7 +12,7 @@ import android.graphics.Rect;
  * and multiplayer. It can also draw Pong.
  * </p>
  * <p>
- * This class is to be used in a {@link nl.sjtek.smartmobile.libpong.ui.GameView}.
+ * This class is to be used in a {@link nl.sjtek.smartmobile.libpong.ui.PongView}.
  * </p>
  */
 public class GameUpdater {
@@ -27,57 +27,61 @@ public class GameUpdater {
      * It will generate an Y position for the top bat.
      * </p>
      *
-     * @param gs         The {@link nl.sjtek.smartmobile.libpong.game.GameState} to update
+     * @param pongState  The {@link PongState} to update
      * @param bottomBatX The position of the bottom bat
      */
-    public static void update(GameState gs, int bottomBatX) {
-        update(gs, bottomBatX, (gs.getBallX() - gs.getBatLength() / 2));
+    public static void update(PongState pongState, int bottomBatX) {
+        update(pongState, bottomBatX, (pongState.getBallX() - pongState.getBatLength() / 2));
     }
 
     /**
      * Run a game cycle for multiplayer.
      * <b>Only for the host!</b>
      *
-     * @param gs         The {@link nl.sjtek.smartmobile.libpong.game.GameState} to update
+     * @param ps         The {@link PongState} to update
      * @param bottomBatX The position of the bottom bat
      * @param topBatX    The position of the top bat
      */
-    public static void update(GameState gs, int bottomBatX, int topBatX) {
+    public static void update(PongState ps, int bottomBatX, int topBatX) {
 
-        gs.setBallX(gs.getBallX() + gs.getBallVelocityX());
-        gs.setBallY(gs.getBallY() + gs.getBallVelocityY());
+        ps.setBallX(ps.getBallX() + ps.getBallVelocityX());
+        ps.setBallY(ps.getBallY() + ps.getBallVelocityY());
 
-        gs.setTopBatX(topBatX);
-        gs.setBottomBatX(bottomBatX);
+        ps.setTopBatX(topBatX);
+        ps.setBottomBatX(bottomBatX);
 
         //Death
 
-        if (gs.getBallY() > gs.getScreenHeight() - (gs.getBallSize() / 2)) {
+        if (ps.getBallY() > ps.getScreenHeight() - (ps.getBallSize() / 2)) {
             //Collisions with the sides
-            gs.winTop();
-            gs.setBallX(100);
-            gs.setBallY(gs.getScreenHeight() / 2);
+            ps.winTop();
+            ps.setBallX(100);
+            ps.setBallY(ps.getScreenHeight() / 2);
         }
 
-        if (gs.getBallY() < gs.getBallSize() / 2) {
+        if (ps.getBallY() < ps.getBallSize() / 2) {
             //Collisions with the sides
-            gs.winBottom();
-            gs.setBallX(100);
-            gs.setBallY(gs.getScreenHeight() / 2);
+            ps.winBottom();
+            ps.setBallX(100);
+            ps.setBallY(ps.getScreenHeight() / 2);
         }
 
-        if (gs.getBallX() > gs.getScreenWidth() || gs.getBallX() < 0) {
+        if (ps.getBallX() > ps.getScreenWidth() || ps.getBallX() < 0) {
             //Collisions with the bats
-            gs.setBallVelocityX(gs.getBallVelocityX() * -1);
+            ps.setBallVelocityX(ps.getBallVelocityX() * -1);
         }
 
-        if (gs.getBallX() > gs.getTopBatX() && gs.getBallX() < gs.getTopBatX() + gs.getBatLength() && gs.getBallY() < gs.getTopBatY()) {
+        if (ps.getBallX() > ps.getTopBatX() &&
+                ps.getBallX() < ps.getTopBatX() + ps.getBatLength() &&
+                ps.getBallY() < ps.getTopBatY()) {
             //Collisions with the bats
-            gs.setBallVelocityY(gs.getBallVelocityY() * -1);
+            ps.setBallVelocityY(ps.getBallVelocityY() * -1);
         }
 
-        if (gs.getBallX() > bottomBatX && gs.getBallX() < bottomBatX + gs.getBatLength() && gs.getBallY() > gs.getBottomBatY()) {
-            gs.setBallVelocityY(gs.getBallVelocityY() * -1);
+        if (ps.getBallX() > bottomBatX &&
+                ps.getBallX() < bottomBatX + ps.getBatLength() &&
+                ps.getBallY() > ps.getBottomBatY()) {
+            ps.setBallVelocityY(ps.getBallVelocityY() * -1);
         }
     }
 
@@ -85,10 +89,10 @@ public class GameUpdater {
      * Draw the game to a canvas.
      *
      * @param canvas   The canvas where we have to draw
-     * @param gs       The {@link nl.sjtek.smartmobile.libpong.game.GameState} to draw
+     * @param gs       The {@link PongState} to draw
      * @param swapBats Swap the top and bottom bat. False for host. True for client.
      */
-    public static void draw(Canvas canvas, final GameState gs, boolean swapBats) {
+    public static void draw(Canvas canvas, final PongState gs, boolean swapBats) {
 
         Paint paint = new Paint();
 
