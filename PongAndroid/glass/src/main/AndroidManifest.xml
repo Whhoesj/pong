@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="nl.sjtek.smartmobile.pong">
+    package="nl.sjtek.smartmobile.pong" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -9,11 +9,11 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         <activity
             android:name=".ActivityMain"
             android:icon="@mipmap/ic_launcher"
-            android:label="@string/app_name">
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="com.google.android.glass.action.VOICE_TRIGGER" />
             </intent-filter>
@@ -28,7 +28,7 @@
         <activity
             android:name=".ActivityHost"
             android:label="@string/host_game"
-            android:parentActivityName=".ActivityMain">
+            android:parentActivityName=".ActivityMain" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="nl.sjtek.smartmobile.pong.ActivityMain" />
@@ -36,10 +36,14 @@
         <activity
             android:name=".ActivityJoin"
             android:label="@string/join_game"
-            android:parentActivityName=".ActivityMain">
+            android:parentActivityName=".ActivityMain" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="nl.sjtek.smartmobile.pong.ActivityMain" />
+        </activity>
+        <activity
+            android:name=".ActivitySendScore"
+            android:label="@string/title_activity_activity_send_score" >
         </activity>
     </application>
 

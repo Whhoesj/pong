@@ -2,6 +2,7 @@ package nl.sjtek.smartmobile.pong;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -14,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.WindowManager;
 
+import nl.sjtek.smartmobile.libpong.game.PongState;
 import nl.sjtek.smartmobile.libpong.ui.PongView;
 import nl.sjtek.smartmobile.libpong.ui.Utils;
 
@@ -78,12 +80,25 @@ public class ActivitySingleplayer extends Activity implements SensorEventListene
         return super.onKeyDown(keyCode, event);
     }
 
+    private boolean done = false;
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
 
         float valueMapped = Utils.map(sensorEvent.values[0], -2f, 2f, 565f, 0f);
         valueSmooth = Utils.exponentialSmoothing(valueMapped, valueSmooth, 0.1f);
         pongView.setBottomBatX((int) valueSmooth);
+
+        PongState pongState = pongView.getPongState();
+        int scoreBottom = pongState.getScoreBottom();
+        int scoreTop = pongState.getScoreTop();
+        if ((scoreBottom > 20 || scoreTop > 20) && !done) {
+            done = true;
+            Intent scoreIntent = new Intent(this, ActivitySendScore.class);
+            scoreIntent.putExtra(ActivitySendScore.EXTRA_SCOREPLAYER, scoreBottom);
+            scoreIntent.putExtra(ActivitySendScore.EXTRA_SCOREAI, scoreTop);
+            startActivity(scoreIntent);
+            finish();
+        }
     }
 
     @Override
