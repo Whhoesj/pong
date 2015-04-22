@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:title="@string/exit"
+        android:id="@+id/action_exit"
         android:icon="@drawable/ic_stop"
-        android:id="@+id/action_exit"/>
+        android:title="@string/exit" />
 </menu>

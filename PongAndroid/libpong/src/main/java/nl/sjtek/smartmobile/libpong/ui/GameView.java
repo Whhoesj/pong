@@ -57,6 +57,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     /**
      * Change the X position of the bottom bat.
+     *
      * @param x New X position of the bottom bat
      */
     public void setBottomBatX(int x) {
@@ -66,6 +67,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     /**
      * Change the X position of the top bat.
      * <p>Only for multiplayer.</p>
+     *
      * @param x New X position of the top bat
      */
     public void setTopBatX(int x) {
@@ -74,6 +76,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     /**
      * Get the current {@link GameState}.
+     *
      * @return The GameState
      */
     public GameState getGameState() {
@@ -103,7 +106,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         @Override
         public void run() {
 
-            while (delayedStart);
+            while (delayedStart) ;
 
             while (running) {
                 Canvas canvas = getHolder().lockCanvas();

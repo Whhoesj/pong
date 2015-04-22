@@ -8,11 +8,11 @@ import android.graphics.Rect;
  * <h1>Game updater</h1>
  * Run a game cycle or update the UI.
  * <p>
- *     This class can run a game cycle (update ball and check for collisions) for both singleplayer
- *     and multiplayer. It can also draw Pong.
+ * This class can run a game cycle (update ball and check for collisions) for both singleplayer
+ * and multiplayer. It can also draw Pong.
  * </p>
  * <p>
- *     This class is to be used in a {@link nl.sjtek.smartmobile.libpong.ui.GameView}.
+ * This class is to be used in a {@link nl.sjtek.smartmobile.libpong.ui.GameView}.
  * </p>
  */
 public class GameUpdater {
@@ -23,10 +23,11 @@ public class GameUpdater {
     /**
      * Run a game cycle for singleplayer
      * <p>
-     *     Requires an X position for the bottom bat.<br />
-     *     It will generate an Y position for the top bat.
+     * Requires an X position for the bottom bat.<br />
+     * It will generate an Y position for the top bat.
      * </p>
-     * @param gs The {@link nl.sjtek.smartmobile.libpong.game.GameState} to update
+     *
+     * @param gs         The {@link nl.sjtek.smartmobile.libpong.game.GameState} to update
      * @param bottomBatX The position of the bottom bat
      */
     public static void update(GameState gs, int bottomBatX) {
@@ -36,9 +37,10 @@ public class GameUpdater {
     /**
      * Run a game cycle for multiplayer.
      * <b>Only for the host!</b>
-     * @param gs The {@link nl.sjtek.smartmobile.libpong.game.GameState} to update
+     *
+     * @param gs         The {@link nl.sjtek.smartmobile.libpong.game.GameState} to update
      * @param bottomBatX The position of the bottom bat
-     * @param topBatX The position of the top bat
+     * @param topBatX    The position of the top bat
      */
     public static void update(GameState gs, int bottomBatX, int topBatX) {
 
@@ -81,8 +83,9 @@ public class GameUpdater {
 
     /**
      * Draw the game to a canvas.
-     * @param canvas The canvas where we have to draw
-     * @param gs The {@link nl.sjtek.smartmobile.libpong.game.GameState} to draw
+     *
+     * @param canvas   The canvas where we have to draw
+     * @param gs       The {@link nl.sjtek.smartmobile.libpong.game.GameState} to draw
      * @param swapBats Swap the top and bottom bat. False for host. True for client.
      */
     public static void draw(Canvas canvas, final GameState gs, boolean swapBats) {

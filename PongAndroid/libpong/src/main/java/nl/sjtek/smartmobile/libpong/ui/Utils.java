@@ -12,9 +12,10 @@ public class Utils {
 
     /**
      * Scale a value in a range.
-     * @param x Value to change
-     * @param in_min Lowest value in old range
-     * @param in_max Highest value in old range
+     *
+     * @param x       Value to change
+     * @param in_min  Lowest value in old range
+     * @param in_max  Highest value in old range
      * @param out_min Lowest value in new range
      * @param out_max Highest value in new range
      * @return Scaled value
@@ -26,11 +27,12 @@ public class Utils {
     /**
      * Apply exponential smoothing to a value
      * <p>
-     *     Nice for sensor input
+     * Nice for sensor input
      * </p>
-     * @param input Input value
+     *
+     * @param input  Input value
      * @param output Previous output value
-     * @param alpha Smoothing constant
+     * @param alpha  Smoothing constant
      * @return
      */
     public static float exponentialSmoothing(float input, float output, float alpha) {
@@ -39,6 +41,7 @@ public class Utils {
 
     /**
      * Get the current IP address on the connected wifi network as a {@link java.lang.String}.
+     *
      * @param context Context to get the data from
      * @return IP address
      */
