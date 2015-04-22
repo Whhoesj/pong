@@ -94,7 +94,8 @@ public class GameUpdater {
      */
     public static void draw(Canvas canvas, final PongState gs, boolean swapBats) {
 
-        Paint paint = new Paint();
+        Paint pongPaint = new Paint();
+        Paint textPaint = new Paint();
 
         final int ballSize = gs.getBallSize();
         final int ballX = gs.getBallX();
@@ -116,16 +117,21 @@ public class GameUpdater {
         canvas.drawRGB(0, 0, 0);
 
         //set the colour
-        paint.setARGB(200, 255, 255, 255);
+        pongPaint.setARGB(200, 255, 255, 255);
+        textPaint.setARGB(200, 153, 153, 153);
 
         //draw the ball
         canvas.drawRect(new Rect(ballX, ballY, ballX + ballSize, ballY + ballSize),
-                paint);
+                pongPaint);
 
         //draw the bats
         canvas.drawRect(new Rect(topBatX, topBatY, topBatX + batLength,
-                topBatY + batHeight), paint); //top bat
+                topBatY + batHeight), pongPaint); //top bat
         canvas.drawRect(new Rect(bottomBatX, bottomBatY, bottomBatX + batLength,
-                bottomBatY + batHeight), paint); //bottom bat
+                bottomBatY + batHeight), pongPaint); //bottom bat
+
+        textPaint.setTextSize(50f);
+        canvas.drawText(String.valueOf(gs.getScoreTop()), 100, 150, textPaint);
+        canvas.drawText(String.valueOf(gs.getScoreBottom()), 100, gs.getScreenHeight() - 150, textPaint);
     }
 }
