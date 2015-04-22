@@ -115,4 +115,9 @@ public class Score {
             return null;
         }
     }
+
+    @Override
+    public String toString() {
+        return "Name: " + playerName + " Score: " + playerScore;
+    }
 }

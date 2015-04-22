@@ -7,6 +7,11 @@
         android:title="@string/singleplayer" />
 
     <item
+        android:id="@+id/action_scoreboard"
+        android:icon="@drawable/ic_glass_logo"
+        android:title="@string/scoreboard" />
+
+    <item
         android:id="@+id/action_multiplayer"
         android:icon="@drawable/ic_glass_logo"
         android:title="@string/multiplayer">

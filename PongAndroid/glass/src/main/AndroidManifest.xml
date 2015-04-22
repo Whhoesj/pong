@@ -45,6 +45,10 @@
             android:name=".ActivitySendScore"
             android:label="@string/title_activity_activity_send_score" >
         </activity>
+        <activity
+            android:name=".ActivityScoreboard"
+            android:label="@string/title_activity_activity_scoreboard" >
+        </activity>
     </application>
 
 </manifest>

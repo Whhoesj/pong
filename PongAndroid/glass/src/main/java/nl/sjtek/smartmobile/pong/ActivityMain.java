@@ -41,6 +41,10 @@ public class ActivityMain extends Activity {
                 Intent intentJoin = new Intent(this, ActivityJoin.class);
                 startActivity(intentJoin);
                 return true;
+            case R.id.action_scoreboard:
+                Intent intentScoreboard = new Intent(this, ActivityScoreboard.class);
+                startActivity(intentScoreboard);
+                return true;
             case R.id.action_exit:
                 finish();
                 return true;
