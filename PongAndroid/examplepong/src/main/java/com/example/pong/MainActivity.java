@@ -17,7 +17,7 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
     private PongView pongView;
     private SensorManager sensorManager;
     private Sensor sensor;
-    private float previousValue = 0;
+    private float smoothValue = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +43,8 @@ public class MainActivity extends ActionBarActivity implements SensorEventListen
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        float mappedValue = Utils.map(sensorEvent.values[0], -2, 2, 0, 500);
-        float smoothValue = Utils.exponentialSmoothing(previousValue, mappedValue, 0.1f);
+        float mappedValue = Utils.map(sensorEvent.values[1], -2, 2, 0, 100);
+        smoothValue = Utils.exponentialSmoothing(smoothValue, mappedValue, 0.1f);
         pongView.setBottomBatX((int) smoothValue);
     }
 
